@@ -765,7 +765,23 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: QUANTUM_XY
+    EmbeddedLinux: QUANTUM_XY
+    GameCoreScarlett: QUANTUM_XY
+    GameCoreXboxOne: QUANTUM_XY
+    LinuxHeadlessSimulation: QUANTUM_XY
+    Lumin: QUANTUM_XY
+    Nintendo Switch: QUANTUM_XY
+    PS4: QUANTUM_XY
+    PS5: QUANTUM_XY
+    Stadia: QUANTUM_XY
+    Standalone: QUANTUM_XY
+    WebGL: QUANTUM_XY
+    Windows Store Apps: QUANTUM_XY
+    XboxOne: QUANTUM_XY
+    iPhone: QUANTUM_XY
+    tvOS: QUANTUM_XY
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
