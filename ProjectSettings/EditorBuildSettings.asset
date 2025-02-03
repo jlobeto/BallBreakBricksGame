@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/QuantumUser/Scenes/QuantumSimpleConnectionScene.unity
+    guid: c1c644e7f80661a41929b6568ae51040
   - enabled: 1
     path: Assets/QuantumUser/Scenes/QuantumGameScene.unity
     guid: de56d98144df8c0468ae69673c938819
-  - enabled: 1
+  - enabled: 0
     path: Assets/Photon/QuantumMenu/QuantumSampleMenu.unity
     guid: f23d3edd333e1dc449a4688e04123759
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+  - enabled: 0
+    path: Assets/Scenes/Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
