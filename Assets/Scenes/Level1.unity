@@ -258,17 +258,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1025443031 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1576299518214471896, guid: 9e52c4108d4e3074282ea18a554807f4, type: 3}
-  m_PrefabInstance: {fileID: 1576299517896295439}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0008c51fe3af00b4da5d44f02d9b3dff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1697613122
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,11 +347,15 @@ MonoBehaviour:
         Value: 654058214442534560
     SystemsConfig:
       Id:
-        Value: 958133048409056067
+        Value: 453886337120267269
   UseRandomSeed: 0
   SessionConfig: {fileID: 0}
-  LocalPlayers: []
-  MaxPlayerCount: 0
+  LocalPlayers:
+  - PlayerAvatar:
+      Id:
+        Value: 1399129362211526553
+    PlayerNickname: 
+  MaxPlayerCount: 2
   SimulationSpeedMultiplier: 1
   DisplaySaveAndReloadButton: 0
   PreloadAddressables: 0
@@ -423,8 +416,7 @@ MonoBehaviour:
   NavMeshSerializeType: 0
   StaticCollider2DReferences: []
   StaticCollider3DReferences: []
-  MapEntityReferences:
-  - {fileID: 1025443031}
+  MapEntityReferences: []
 --- !u!4 &2036135282
 Transform:
   m_ObjectHideFlags: 0
@@ -591,6 +583,10 @@ PrefabInstance:
     - target: {fileID: 1576299518214471897, guid: 9e52c4108d4e3074282ea18a554807f4, type: 3}
       propertyPath: m_Name
       value: Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576299518214471897, guid: 9e52c4108d4e3074282ea18a554807f4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e52c4108d4e3074282ea18a554807f4, type: 3}
