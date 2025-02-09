@@ -16,7 +16,11 @@ namespace Quantum
         public void OnPlayerAdded(Frame f, PlayerRef player, bool firstTime)
         {
             var runtimePlayer = f.GetPlayerData(player);
-            f.Create(runtimePlayer.PlayerAvatar);
+            var entity = f.Create(runtimePlayer.PlayerAvatar);
+
+            var p = f.Unsafe.GetPointer<PlayerLink>(entity);
+            p->playerRef = player;
+            p->speed = 5;
             
             Debug.Log($"OnPlayerAdded - {player}");
             
