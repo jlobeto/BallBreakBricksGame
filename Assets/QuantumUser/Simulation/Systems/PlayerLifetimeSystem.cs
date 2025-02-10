@@ -20,7 +20,7 @@ namespace Quantum
 
             var p = f.Unsafe.GetPointer<PlayerLink>(entity);
             p->playerRef = player;
-            p->speed = 5;
+            p->speed = 1;
             
             Debug.Log($"OnPlayerAdded - {player}");
             

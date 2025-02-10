@@ -8,7 +8,10 @@ namespace Quantum
     {
         public override void Update(Frame f, ref Filter filter)
         {
-            //filter.Transform->Position += new FPVector2(FP._1, 0);
+            var input = f.GetPlayerInput(filter.PlayerLink->playerRef);
+            
+            if(input->HorizontalInput != 0)
+                filter.Transform->Position += new FPVector2(filter.PlayerLink->speed * input->HorizontalInput, 0);
         }
 
         public struct Filter
