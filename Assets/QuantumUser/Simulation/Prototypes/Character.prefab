@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1576299518214471893}
   - component: {fileID: 1576299518214471894}
+  - component: {fileID: 6670466467790859356}
   - component: {fileID: 1576299518214471895}
   - component: {fileID: 1576299518214471896}
   - component: {fileID: 8267904383142982886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +88,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &6670466467790859356
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576299518214471897}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &1576299518214471895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransformMode: 0
   Transform2DVertical:
-    IsEnabled: 1
+    IsEnabled: 0
     Height:
       RawValue: 0
     PositionOffset:
@@ -112,7 +139,7 @@ MonoBehaviour:
     Material:
       Id:
         Value: 0
-    SourceCollider: {fileID: 0}
+    SourceCollider: {fileID: 6670466467790859356}
     Shape2D:
       ShapeType: 4
       PolygonCollider:
@@ -175,16 +202,16 @@ MonoBehaviour:
       IsPersistent: 1
       CompoundShapes: []
     LayerSource: 0
-    Layer: 0
+    Layer: 6
     CallbackFlags:
-      Value: 0
+      Value: 4095
   PhysicsBody:
-    IsEnabled: 0
-    Config2D: 116
+    IsEnabled: 1
+    Config2D: 0
     Config3D: 58
     RotationFreeze: 0
     Mass:
-      RawValue: 65536
+      RawValue: 0
     Drag:
       RawValue: 32768
     AngularDrag:

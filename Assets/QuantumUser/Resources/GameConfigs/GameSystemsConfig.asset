@@ -51,3 +51,8 @@ MonoBehaviour:
     SystemName: 
     StartDisabled: 0
     Children: []
+  - SystemType:
+      AssemblyQualifiedName: Quantum.CollisionMainSystem, Quantum.Simulation
+    SystemName: 
+    StartDisabled: 0
+    Children: []

@@ -282,7 +282,7 @@ MonoBehaviour:
       RawValue: 1311
     AngularSleepToleranceInRad:
       RawValue: 2288
-    AllowCCD: 0
+    AllowCCD: 1
     CCDLinearVelocityThreshold:
       RawValue: 196608
     CCDAngularVelocityThreshold:
@@ -316,7 +316,7 @@ MonoBehaviour:
     - 
     - Water
     - UI
-    - 
+    - Player
     - 
     - 
     - 
