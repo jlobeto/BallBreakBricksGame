@@ -520,6 +520,46 @@ namespace Quantum {
         FP.Serialize(&p->speed, serializer);
     }
   }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct PlayerMovementData : Quantum.IComponentSingleton {
+    public const Int32 SIZE = 8;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(4)]
+    public QBoolean canMoveRight;
+    [FieldOffset(0)]
+    public QBoolean canMoveLeft;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 12923;
+        hash = hash * 31 + canMoveRight.GetHashCode();
+        hash = hash * 31 + canMoveLeft.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (PlayerMovementData*)ptr;
+        QBoolean.Serialize(&p->canMoveLeft, serializer);
+        QBoolean.Serialize(&p->canMoveRight, serializer);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct Wall : Quantum.IComponent {
+    public const Int32 SIZE = 4;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(0)]
+    public QBoolean isLeft;
+    public override Int32 GetHashCode() {
+      unchecked { 
+        var hash = 89;
+        hash = hash * 31 + isLeft.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (Wall*)ptr;
+        QBoolean.Serialize(&p->isLeft, serializer);
+    }
+  }
   public static unsafe partial class Constants {
   }
   public unsafe partial class Frame {
@@ -568,6 +608,8 @@ namespace Quantum {
       BuildSignalsArrayOnComponentRemoved<PhysicsJoints3D>();
       BuildSignalsArrayOnComponentAdded<Quantum.PlayerLink>();
       BuildSignalsArrayOnComponentRemoved<Quantum.PlayerLink>();
+      BuildSignalsArrayOnComponentAdded<Quantum.PlayerMovementData>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.PlayerMovementData>();
       BuildSignalsArrayOnComponentAdded<Transform2D>();
       BuildSignalsArrayOnComponentRemoved<Transform2D>();
       BuildSignalsArrayOnComponentAdded<Transform2DVertical>();
@@ -576,6 +618,8 @@ namespace Quantum {
       BuildSignalsArrayOnComponentRemoved<Transform3D>();
       BuildSignalsArrayOnComponentAdded<View>();
       BuildSignalsArrayOnComponentRemoved<View>();
+      BuildSignalsArrayOnComponentAdded<Quantum.Wall>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.Wall>();
     }
     partial void SetPlayerInputCodeGen(PlayerRef player, Input input) {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
@@ -669,6 +713,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(PhysicsQueryRef), PhysicsQueryRef.SIZE);
       typeRegistry.Register(typeof(PhysicsSceneSettings), PhysicsSceneSettings.SIZE);
       typeRegistry.Register(typeof(Quantum.PlayerLink), Quantum.PlayerLink.SIZE);
+      typeRegistry.Register(typeof(Quantum.PlayerMovementData), Quantum.PlayerMovementData.SIZE);
       typeRegistry.Register(typeof(PlayerRef), PlayerRef.SIZE);
       typeRegistry.Register(typeof(Ptr), Ptr.SIZE);
       typeRegistry.Register(typeof(QBoolean), QBoolean.SIZE);
@@ -683,12 +728,15 @@ namespace Quantum {
       typeRegistry.Register(typeof(Transform2DVertical), Transform2DVertical.SIZE);
       typeRegistry.Register(typeof(Transform3D), Transform3D.SIZE);
       typeRegistry.Register(typeof(View), View.SIZE);
+      typeRegistry.Register(typeof(Quantum.Wall), Quantum.Wall.SIZE);
       typeRegistry.Register(typeof(Quantum._globals_), Quantum._globals_.SIZE);
     }
     static partial void InitComponentTypeIdGen() {
-      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 1)
+      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 3)
         .AddBuiltInComponents()
         .Add<Quantum.PlayerLink>(Quantum.PlayerLink.Serialize, null, null, ComponentFlags.None)
+        .Add<Quantum.PlayerMovementData>(Quantum.PlayerMovementData.Serialize, null, null, ComponentFlags.Singleton)
+        .Add<Quantum.Wall>(Quantum.Wall.Serialize, null, null, ComponentFlags.None)
         .Finish();
     }
     [Preserve()]

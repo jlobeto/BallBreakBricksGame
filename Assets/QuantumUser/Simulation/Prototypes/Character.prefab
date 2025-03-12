@@ -207,7 +207,7 @@ MonoBehaviour:
       Value: 4095
   PhysicsBody:
     IsEnabled: 1
-    Config2D: 0
+    Config2D: 1
     Config3D: 58
     RotationFreeze: 0
     Mass:
