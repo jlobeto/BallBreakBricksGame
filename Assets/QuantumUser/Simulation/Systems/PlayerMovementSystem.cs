@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Assertions.Must;
 
 namespace Quantum
@@ -25,10 +26,17 @@ namespace Quantum
                 FP horizontalInput = input->HorizontalInput;
                 
                 if (!data->canMoveLeft)
+                {
                     horizontalInput = FPMath.Clamp(horizontalInput, 0, 1);
+                    Debug.Log($"Cant move left! - > Frame {f.Number}");
+                }
                 else if(!data->canMoveRight)
+                {
                     horizontalInput = FPMath.Clamp(horizontalInput, -1, 0);
+                    Debug.Log($"Cant move right! - > Frame {f.Number}");
+                }
                 
+                Debug.Log($"Horizontal - > {horizontalInput}");
                 filter.Transform->Position += new FPVector2(filter.PlayerLink->speed * horizontalInput, 0);
             }
         }
