@@ -21,10 +21,10 @@ namespace Quantum
 
             var playerLink = f.Unsafe.GetPointer<PlayerLink>(entity);
             playerLink->playerRef = player;
-            playerLink->speed = 1;
+            playerLink->speed = 3;
 
             var transform2D = f.Unsafe.GetPointer<Transform2D>(entity);
-            transform2D->Position = new FPVector2(-44, 0);
+            transform2D->Position = new FPVector2(0, 0);
             
             var data = f.Unsafe.GetOrAddSingletonPointer<PlayerMovementData>();
             data->canMoveRight = data->canMoveLeft = true;

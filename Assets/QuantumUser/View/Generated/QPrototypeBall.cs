@@ -14,14 +14,14 @@ namespace Quantum {
   using UnityEngine;
   
   [UnityEngine.DisallowMultipleComponent()]
-  public unsafe partial class QPrototypeWall : QuantumUnityComponentPrototype<Quantum.Prototypes.WallPrototype>, IQuantumUnityPrototypeWrapperForComponent<Quantum.Wall> {
-    partial void CreatePrototypeUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.WallPrototype prototype);
+  public unsafe partial class QPrototypeBall : QuantumUnityComponentPrototype<Quantum.Prototypes.BallPrototype>, IQuantumUnityPrototypeWrapperForComponent<Quantum.Ball> {
+    partial void CreatePrototypeUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.BallPrototype prototype);
     [DrawInline()]
     [ReadOnly(InEditMode = false)]
-    public Quantum.Prototypes.WallPrototype Prototype;
+    public Quantum.Prototypes.BallPrototype Prototype;
     public override System.Type ComponentType {
       get {
-        return typeof(Quantum.Wall);
+        return typeof(Quantum.Ball);
       }
     }
     public override ComponentPrototype CreatePrototype(Quantum.QuantumEntityPrototypeConverter converter) {

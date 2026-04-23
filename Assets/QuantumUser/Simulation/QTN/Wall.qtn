@@ -1,4 +1,0 @@
-component Wall
-{
-    bool isLeft;
-}

@@ -14,6 +14,8 @@ namespace Quantum
             public EntityRef Entity;
             public PlayerLink* PlayerLink;
             public Transform2D* Transform;
+            public PhysicsBody2D* PhysicsBody2D;
+            public PhysicsCollider2D* Collider2D;
         }
         
         public override void Update(Frame f, ref Filter filter)
@@ -22,22 +24,28 @@ namespace Quantum
             
             if(input->HorizontalInput != 0)
             {
-                var data = f.Unsafe.GetPointerSingleton<PlayerMovementData>();
                 FP horizontalInput = input->HorizontalInput;
                 
-                if (!data->canMoveLeft)
+                //set this constrains as quantum assets as a level config file 
+                if (filter.Transform->Position.X <= -11)
                 {
                     horizontalInput = FPMath.Clamp(horizontalInput, 0, 1);
-                    Debug.Log($"Cant move left! - > Frame {f.Number}");
                 }
-                else if(!data->canMoveRight)
+                else if(filter.Transform->Position.X >= 11)
                 {
                     horizontalInput = FPMath.Clamp(horizontalInput, -1, 0);
-                    Debug.Log($"Cant move right! - > Frame {f.Number}");
+                }
+
+                filter.Transform->Position += new FPVector2(filter.PlayerLink->speed * horizontalInput, 0);
+                if (filter.Transform->Position.X < -11)
+                {
+                    filter.Transform->Position = new FPVector2(-11, 0);
+                }
+                else if (filter.Transform->Position.X > 11)
+                {
+                    filter.Transform->Position = new FPVector2(11, 0);
                 }
                 
-                Debug.Log($"Horizontal - > {horizontalInput}");
-                filter.Transform->Position += new FPVector2(filter.PlayerLink->speed * horizontalInput, 0);
             }
         }
 

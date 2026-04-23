@@ -59,6 +59,12 @@ MonoBehaviour:
     SystemName: 
     StartDisabled: 0
     Children: []
+  - SystemType:
+      AssemblyQualifiedName: Quantum.BallMovementSystem, Quantum.Simulation, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    SystemName: 
+    StartDisabled: 0
+    Children: []
 --- !u!114 &-6387752333231195000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +257,6 @@ MonoBehaviour:
       Z:
         RawValue: 0
     SolverType: 1
-    UsePhysicsNativeLib: 0
     SolverIterations: 4
     PositionSolverIterations: 2
     UseJoints: 1
@@ -283,6 +288,7 @@ MonoBehaviour:
     AngularSleepToleranceInRad:
       RawValue: 2288
     AllowCCD: 1
+    InvokeSpeculativeCallbacks: 0
     CCDLinearVelocityThreshold:
       RawValue: 196608
     CCDAngularVelocityThreshold:
