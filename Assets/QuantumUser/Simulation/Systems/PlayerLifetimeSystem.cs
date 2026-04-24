@@ -1,3 +1,4 @@
+using Quantum.Prototypes;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
@@ -21,15 +22,26 @@ namespace Quantum
 
             var playerLink = f.Unsafe.GetPointer<PlayerLink>(entity);
             playerLink->playerRef = player;
-            playerLink->speed = 3;
+            playerLink->speed = 2;
 
-            var transform2D = f.Unsafe.GetPointer<Transform2D>(entity);
-            transform2D->Position = new FPVector2(0, 0);
-            
-            var data = f.Unsafe.GetOrAddSingletonPointer<PlayerMovementData>();
-            data->canMoveRight = data->canMoveLeft = true;
+            var playerTransform = f.Unsafe.GetPointer<Transform2D>(entity);
+            playerTransform->Position = new FPVector2(0, 0);
             
             Debug.Log($"OnPlayerAdded - {player}");
+            
+            CreatePlayerBall(f, playerTransform->Position);
+        }
+
+        private void CreatePlayerBall(Frame f, FPVector2 playerPosition)
+        {
+            var commonBallConfig = f.FindAsset(f.RuntimeConfig.BallCommonConfig);
+            var ballEntityRef = f.Create(commonBallConfig.BallPrototype);
+            
+            var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
+            ballPhysics->Velocity = new FPVector2(commonBallConfig.InitialSpeed);
+            
+            var ballTransform = f.Unsafe.GetPointer<Transform2D>(ballEntityRef);
+            ballTransform->Position = playerPosition + FPVector2.Up * 2;
         }
     }
 }

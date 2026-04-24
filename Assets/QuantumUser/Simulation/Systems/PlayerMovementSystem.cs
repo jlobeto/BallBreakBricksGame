@@ -14,8 +14,6 @@ namespace Quantum
             public EntityRef Entity;
             public PlayerLink* PlayerLink;
             public Transform2D* Transform;
-            public PhysicsBody2D* PhysicsBody2D;
-            public PhysicsCollider2D* Collider2D;
         }
         
         public override void Update(Frame f, ref Filter filter)
@@ -45,7 +43,6 @@ namespace Quantum
                 {
                     filter.Transform->Position = new FPVector2(11, 0);
                 }
-                
             }
         }
 
