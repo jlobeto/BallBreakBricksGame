@@ -18,6 +18,10 @@ namespace Quantum
             {
                 f.Destroy(blockRef);
             }
+            else
+            {
+                f.Events.OnBlockReceivedDamage(blockRef, block->lives);
+            }
         }
     }
 }
