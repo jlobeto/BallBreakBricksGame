@@ -6,6 +6,8 @@ namespace Quantum
 
     public unsafe class BallMovementSystem : SystemMainThreadFilter<BallMovementSystem.Filter>
     {
+        public override bool StartEnabled => false;
+
         public override void Update(Frame frame, ref Filter filter)
         {
 

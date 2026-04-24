@@ -1,0 +1,4 @@
+component Block
+{
+    int lives;
+}

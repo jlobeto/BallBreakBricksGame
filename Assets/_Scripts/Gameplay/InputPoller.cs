@@ -16,7 +16,12 @@ public class InputPoller : MonoBehaviour
     {
         Quantum.Input i = new Quantum.Input();
 
-        i.HorizontalInput = Input.GetAxis("Horizontal").ToFP();
+        if (Input.GetKey(KeyCode.A))
+            i.HorizontalInput = -1;
+        else if(Input.GetKey(KeyCode.D))
+            i.HorizontalInput = 1;
+        
+        //i.HorizontalInput = Input.GetAxis("Horizontal").ToFP();
         
         callback.SetInput(i, DeterministicInputFlags.Repeatable);
     }

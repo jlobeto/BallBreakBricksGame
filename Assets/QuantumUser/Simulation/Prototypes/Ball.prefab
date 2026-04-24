@@ -209,7 +209,7 @@ MonoBehaviour:
     LayerSource: 0
     Layer: 7
     CallbackFlags:
-      Value: 0
+      Value: 2
   PhysicsBody:
     IsEnabled: 1
     Config2D: 128
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Quantum.Unity::Quantum.QuantumEntityView
   BindBehaviour: 0
   ManualDisposal: 0
-  ViewFlags: 0
+  ViewFlags: 8
   InterpolationMode: 0
   ErrorCorrectionRateMin: 3.3
   ErrorCorrectionRateMax: 10
@@ -392,5 +392,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Quantum.Unity::Quantum.QPrototypeBall
   Prototype:
-    speed:
-      RawValue: 0
+    damage: 0

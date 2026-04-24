@@ -7,18 +7,16 @@ namespace Quantum
     using UnityEngine.Scripting;
 
     [Preserve]
-    public unsafe class CollisionMainSystem : SystemSignalsOnly, ISignalOnTriggerEnter2D, ISignalOnTriggerExit2D
+    public unsafe class CollisionMainSystem : SystemSignalsOnly, ISignalOnCollisionEnter2D
     {
-        public override bool StartEnabled => false;
-
-        public void OnTriggerEnter2D(Frame f, TriggerInfo2D info)
+        
+        public void OnCollisionEnter2D(Frame f, CollisionInfo2D info)
         {
-            
+            if (f.Has<Block>(info.Other))
+            {
+                //Debug.Log($"Collision Enter - {info.Other.GetName(f)}");
+                f.Signals.OnBlockCollided(0, info.Other, info.Entity);
+            }
         }
-
-        public void OnTriggerExit2D(Frame f, ExitInfo2D info)
-        {
-        }
-
     }
 }

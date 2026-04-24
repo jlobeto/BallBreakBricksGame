@@ -6,5 +6,6 @@ namespace Quantum
     {
         public AssetRef<EntityPrototype> BallPrototype;
         public FP InitialSpeed;
+        public int damage = 1;
     }
 }

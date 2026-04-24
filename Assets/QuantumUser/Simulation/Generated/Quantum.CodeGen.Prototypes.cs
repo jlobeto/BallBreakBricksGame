@@ -52,7 +52,7 @@ namespace Quantum.Prototypes {
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.Ball))]
   public unsafe partial class BallPrototype : ComponentPrototype<Quantum.Ball> {
-    public FP speed;
+    public Int32 damage;
     partial void MaterializeUser(Frame frame, ref Quantum.Ball result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.Ball component = default;
@@ -60,7 +60,22 @@ namespace Quantum.Prototypes {
         return f.Set(entity, component) == SetResult.ComponentAdded;
     }
     public void Materialize(Frame frame, ref Quantum.Ball result, in PrototypeMaterializationContext context = default) {
-        result.speed = this.speed;
+        result.damage = this.damage;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.Block))]
+  public unsafe partial class BlockPrototype : ComponentPrototype<Quantum.Block> {
+    public Int32 lives;
+    partial void MaterializeUser(Frame frame, ref Quantum.Block result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.Block component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.Block result, in PrototypeMaterializationContext context = default) {
+        result.lives = this.lives;
         MaterializeUser(frame, ref result, in context);
     }
   }

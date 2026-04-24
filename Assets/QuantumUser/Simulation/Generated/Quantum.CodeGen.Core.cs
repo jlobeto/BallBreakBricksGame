@@ -610,20 +610,38 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Ball : Quantum.IComponent {
-    public const Int32 SIZE = 8;
-    public const Int32 ALIGNMENT = 8;
+    public const Int32 SIZE = 4;
+    public const Int32 ALIGNMENT = 4;
     [FieldOffset(0)]
-    public FP speed;
+    public Int32 damage;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 4003;
-        hash = hash * 31 + speed.GetHashCode();
+        hash = hash * 31 + damage.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Ball*)ptr;
-        FP.Serialize(&p->speed, serializer);
+        serializer.Stream.Serialize(&p->damage);
+    }
+  }
+  [StructLayout(LayoutKind.Explicit)]
+  public unsafe partial struct Block : Quantum.IComponent {
+    public const Int32 SIZE = 4;
+    public const Int32 ALIGNMENT = 4;
+    [FieldOffset(0)]
+    public Int32 lives;
+    public override readonly Int32 GetHashCode() {
+      unchecked { 
+        var hash = 14561;
+        hash = hash * 31 + lives.GetHashCode();
+        return hash;
+      }
+    }
+    public static void Serialize(void* ptr, FrameSerializer serializer) {
+        var p = (Block*)ptr;
+        serializer.Stream.Serialize(&p->lives);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -670,9 +688,13 @@ namespace Quantum {
         QBoolean.Serialize(&p->canMoveRight, serializer);
     }
   }
+  public unsafe partial interface ISignalOnBlockCollided : ISignal {
+    void OnBlockCollided(Frame f, PlayerRef playerRef, EntityRef blockRef, EntityRef ballRef);
+  }
   public static unsafe partial class Constants {
   }
   public unsafe partial class Frame {
+    private ISignalOnBlockCollided[] _ISignalOnBlockCollidedSystems;
     partial void AllocGen() {
       _globals = (_globals_*)Context.Allocator.AllocAndClear(sizeof(_globals_));
     }
@@ -684,10 +706,13 @@ namespace Quantum {
     }
     partial void InitGen() {
       Initialize(this, this.SimulationConfig.Entities, 256);
+      _ISignalOnBlockCollidedSystems = BuildSignalsArray<ISignalOnBlockCollided>();
       _ComponentSignalsOnAdded = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       _ComponentSignalsOnRemoved = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       BuildSignalsArrayOnComponentAdded<Quantum.Ball>();
       BuildSignalsArrayOnComponentRemoved<Quantum.Ball>();
+      BuildSignalsArrayOnComponentAdded<Quantum.Block>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.Block>();
       BuildSignalsArrayOnComponentAdded<CharacterController2D>();
       BuildSignalsArrayOnComponentRemoved<CharacterController2D>();
       BuildSignalsArrayOnComponentAdded<CharacterController3D>();
@@ -748,6 +773,15 @@ namespace Quantum {
       Physics3D?.Init(_globals->PhysicsState3D.MapStaticCollidersState.TrackedMap);
     }
     public unsafe partial struct FrameSignals {
+      public void OnBlockCollided(PlayerRef playerRef, EntityRef blockRef, EntityRef ballRef) {
+        var array = _f._ISignalOnBlockCollidedSystems;
+        for (Int32 i = 0; i < array.Length; ++i) {
+          var s = array[i];
+          if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
+            s.OnBlockCollided(_f, playerRef, blockRef, ballRef);
+          }
+        }
+      }
     }
   }
   public unsafe partial class Statics {
@@ -766,6 +800,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(Quantum.BitSet4096), Quantum.BitSet4096.SIZE);
       typeRegistry.Register(typeof(Quantum.BitSet512), Quantum.BitSet512.SIZE);
       typeRegistry.Register(typeof(Quantum.BitSet6), Quantum.BitSet6.SIZE);
+      typeRegistry.Register(typeof(Quantum.Block), Quantum.Block.SIZE);
       typeRegistry.Register(typeof(Button), Button.SIZE);
       typeRegistry.Register(typeof(CallbackFlags), 4);
       typeRegistry.Register(typeof(CharacterController2D), CharacterController2D.SIZE);
@@ -843,9 +878,10 @@ namespace Quantum {
       typeRegistry.Register(typeof(Quantum._globals_), Quantum._globals_.SIZE);
     }
     static partial void InitComponentTypeIdGen() {
-      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 3)
+      ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 4)
         .AddBuiltInComponents()
         .Add<Quantum.Ball>(Quantum.Ball.Serialize, null, null, ComponentFlags.None)
+        .Add<Quantum.Block>(Quantum.Block.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.PlayerLink>(Quantum.PlayerLink.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.PlayerMovementData>(Quantum.PlayerMovementData.Serialize, null, null, ComponentFlags.Singleton)
         .Finish();

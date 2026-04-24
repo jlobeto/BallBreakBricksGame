@@ -36,6 +36,9 @@ namespace Quantum
         {
             var commonBallConfig = f.FindAsset(f.RuntimeConfig.BallCommonConfig);
             var ballEntityRef = f.Create(commonBallConfig.BallPrototype);
+
+            var ball = f.Unsafe.GetPointer<Ball>(ballEntityRef);
+            ball->Initialize(commonBallConfig);
             
             var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
             ballPhysics->Velocity = new FPVector2(commonBallConfig.InitialSpeed);

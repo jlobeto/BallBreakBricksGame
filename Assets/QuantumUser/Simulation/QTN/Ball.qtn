@@ -1,4 +1,4 @@
 component Ball
 {
-    FP speed;
+    int damage;
 }   

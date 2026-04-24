@@ -1,1 +1,1 @@
-//signals here
+signal OnBlockCollided (PlayerRef playerRef, entity_ref blockRef, entity_ref ballRef);
