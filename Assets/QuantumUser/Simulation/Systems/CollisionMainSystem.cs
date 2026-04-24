@@ -7,10 +7,10 @@ namespace Quantum
     using UnityEngine.Scripting;
 
     [Preserve]
-    public unsafe class CollisionMainSystem : SystemSignalsOnly, ISignalOnCollisionEnter2D
+    public unsafe class CollisionMainSystem : SystemSignalsOnly, ISignalOnCollisionExit2D
     {
-        
-        public void OnCollisionEnter2D(Frame f, CollisionInfo2D info)
+
+        public void OnCollisionExit2D(Frame f, ExitInfo2D info)
         {
             if (f.Has<Block>(info.Other))
             {

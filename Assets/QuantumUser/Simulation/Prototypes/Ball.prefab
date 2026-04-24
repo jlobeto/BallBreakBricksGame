@@ -209,7 +209,7 @@ MonoBehaviour:
     LayerSource: 0
     Layer: 7
     CallbackFlags:
-      Value: 2
+      Value: 6
   PhysicsBody:
     IsEnabled: 1
     Config2D: 128
