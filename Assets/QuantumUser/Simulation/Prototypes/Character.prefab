@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1576299518214471895}
   - component: {fileID: 1576299518214471896}
   - component: {fileID: 8267904383142982886}
+  - component: {fileID: 839900378715189866}
   m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
@@ -413,3 +414,15 @@ MonoBehaviour:
       _index: 0
     speed:
       RawValue: 0
+--- !u!114 &839900378715189866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576299518214471897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ef3802b3dd9f44ca0a3b4d9b279a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterView

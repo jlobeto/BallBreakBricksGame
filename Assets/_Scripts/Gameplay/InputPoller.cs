@@ -21,7 +21,6 @@ public class InputPoller : MonoBehaviour
         else if(Input.GetKey(KeyCode.D))
             i.HorizontalInput = 1;
         
-        //i.HorizontalInput = Input.GetAxis("Horizontal").ToFP();
         
         callback.SetInput(i, DeterministicInputFlags.Repeatable);
     }

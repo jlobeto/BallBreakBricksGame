@@ -1,4 +1,7 @@
 component Ball
 {
+    player_ref owner;
     int damage;
+    FP initialSpeed;
+    bool wasThrown;
 }   

@@ -610,20 +610,32 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Ball : Quantum.IComponent {
-    public const Int32 SIZE = 4;
-    public const Int32 ALIGNMENT = 4;
+    public const Int32 SIZE = 24;
+    public const Int32 ALIGNMENT = 8;
+    [FieldOffset(4)]
+    public PlayerRef owner;
     [FieldOffset(0)]
     public Int32 damage;
+    [FieldOffset(16)]
+    public FP initialSpeed;
+    [FieldOffset(8)]
+    public QBoolean wasThrown;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 4003;
+        hash = hash * 31 + owner.GetHashCode();
         hash = hash * 31 + damage.GetHashCode();
+        hash = hash * 31 + initialSpeed.GetHashCode();
+        hash = hash * 31 + wasThrown.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (Ball*)ptr;
         serializer.Stream.Serialize(&p->damage);
+        PlayerRef.Serialize(&p->owner, serializer);
+        QBoolean.Serialize(&p->wasThrown, serializer);
+        FP.Serialize(&p->initialSpeed, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]

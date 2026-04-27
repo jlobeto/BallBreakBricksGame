@@ -1,6 +1,4 @@
-using Quantum.Prototypes;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 namespace Quantum
 {
@@ -29,22 +27,22 @@ namespace Quantum
             
             Debug.Log($"OnPlayerAdded - {player}");
             
-            CreatePlayerBall(f, playerTransform->Position);
+            CreatePlayerBall(f, playerTransform->Position, player);
         }
 
-        private void CreatePlayerBall(Frame f, FPVector2 playerPosition)
+        private void CreatePlayerBall(Frame f, FPVector2 playerPosition, PlayerRef playerRef)
         {
             var commonBallConfig = f.FindAsset(f.RuntimeConfig.BallCommonConfig);
             var ballEntityRef = f.Create(commonBallConfig.BallPrototype);
 
             var ball = f.Unsafe.GetPointer<Ball>(ballEntityRef);
-            ball->Initialize(commonBallConfig);
+            ball->Initialize(commonBallConfig, playerRef);
             
             var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
-            ballPhysics->Velocity = new FPVector2(commonBallConfig.InitialSpeed);
+            ballPhysics->Enabled = false;
             
             var ballTransform = f.Unsafe.GetPointer<Transform2D>(ballEntityRef);
-            ballTransform->Position = playerPosition + FPVector2.Up * 2;
+            ballTransform->Position = playerPosition + FPVector2.Up;
         }
     }
 }
