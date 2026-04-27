@@ -209,7 +209,7 @@ MonoBehaviour:
     LayerSource: 0
     Layer: 7
     CallbackFlags:
-      Value: 6
+      Value: 134
   PhysicsBody:
     IsEnabled: 1
     Config2D: 128
@@ -392,4 +392,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Quantum.Unity::Quantum.QPrototypeBall
   Prototype:
+    owner:
+      _index: 0
     damage: 0
+    initialSpeed:
+      RawValue: 0
+    wasThrown:
+      Value: 0

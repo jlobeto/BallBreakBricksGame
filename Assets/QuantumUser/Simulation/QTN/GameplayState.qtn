@@ -1,0 +1,4 @@
+singleton component GameplayState
+{
+    dictionary<player_ref, int> scoresDict;
+}

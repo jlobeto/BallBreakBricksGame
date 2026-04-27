@@ -15,7 +15,7 @@ public class CharacterView : QuantumEntityViewComponent
     {
         if (!_thrownFirstBall && Input.GetKeyDown(KeyCode.Space))
         {
-            _thrownFirstBall = true;
+            //_thrownFirstBall = true;
             QuantumRunner.Default.Game.SendCommand(new ThrowBallCommand());
         }
     }

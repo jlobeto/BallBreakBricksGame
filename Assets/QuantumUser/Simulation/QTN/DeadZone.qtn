@@ -1,0 +1,4 @@
+component DeadZone
+{
+    player_ref owner;
+}

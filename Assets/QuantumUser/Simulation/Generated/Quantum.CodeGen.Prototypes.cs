@@ -50,13 +50,19 @@ namespace Quantum.Prototypes {
   #endif //;
   
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(System.Collections.Generic.KeyValuePair<PlayerRef, Int32>))]
+  public unsafe class DictionaryEntry_PlayerRef_Int32 : Quantum.Prototypes.DictionaryEntry {
+    public PlayerRef Key;
+    public Int32 Value;
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.Ball))]
-  public unsafe partial class BallPrototype : ComponentPrototype<Quantum.Ball> {
+  public unsafe class BallPrototype : ComponentPrototype<Quantum.Ball> {
     public PlayerRef owner;
+    public MapEntityId entityRef;
     public Int32 damage;
     public FP initialSpeed;
     public QBoolean wasThrown;
-    partial void MaterializeUser(Frame frame, ref Quantum.Ball result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.Ball component = default;
         Materialize((Frame)f, ref component, in context);
@@ -64,10 +70,10 @@ namespace Quantum.Prototypes {
     }
     public void Materialize(Frame frame, ref Quantum.Ball result, in PrototypeMaterializationContext context = default) {
         result.owner = this.owner;
+        PrototypeValidator.FindMapEntity(this.entityRef, in context, out result.entityRef);
         result.damage = this.damage;
         result.initialSpeed = this.initialSpeed;
         result.wasThrown = this.wasThrown;
-        MaterializeUser(frame, ref result, in context);
     }
   }
   [System.SerializableAttribute()]
@@ -86,6 +92,49 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.DeadZone))]
+  public unsafe partial class DeadZonePrototype : ComponentPrototype<Quantum.DeadZone> {
+    public PlayerRef owner;
+    partial void MaterializeUser(Frame frame, ref Quantum.DeadZone result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.DeadZone component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.DeadZone result, in PrototypeMaterializationContext context = default) {
+        result.owner = this.owner;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.GameplayState))]
+  public unsafe partial class GameplayStatePrototype : ComponentPrototype<Quantum.GameplayState> {
+    [DictionaryAttribute()]
+    [DynamicCollectionAttribute()]
+    public DictionaryEntry_PlayerRef_Int32[] scoresDict = {};
+    partial void MaterializeUser(Frame frame, ref Quantum.GameplayState result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.GameplayState component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.GameplayState result, in PrototypeMaterializationContext context = default) {
+        if (this.scoresDict.Length == 0) {
+          result.scoresDict = default;
+        } else {
+          var dict = frame.AllocateDictionary(out result.scoresDict, this.scoresDict.Length);
+          for (int i = 0; i < this.scoresDict.Length; ++i) {
+            PlayerRef tmpKey = default;
+            Int32 tmpValue = default;
+            tmpKey = this.scoresDict[i].Key;
+            tmpValue = this.scoresDict[i].Value;
+            PrototypeValidator.AddToDictionary(dict, tmpKey, tmpValue, in context);
+          }
+        }
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.Input))]
   public unsafe partial class InputPrototype : StructPrototype {
     public FP HorizontalInput;
@@ -97,19 +146,19 @@ namespace Quantum.Prototypes {
   }
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerLink))]
-  public unsafe partial class PlayerLinkPrototype : ComponentPrototype<Quantum.PlayerLink> {
+  public unsafe class PlayerLinkPrototype : ComponentPrototype<Quantum.PlayerLink> {
+    public MapEntityId entityRef;
     public PlayerRef playerRef;
     public FP speed;
-    partial void MaterializeUser(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.PlayerLink component = default;
         Materialize((Frame)f, ref component, in context);
         return f.Set(entity, component) == SetResult.ComponentAdded;
     }
     public void Materialize(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context = default) {
+        PrototypeValidator.FindMapEntity(this.entityRef, in context, out result.entityRef);
         result.playerRef = this.playerRef;
         result.speed = this.speed;
-        MaterializeUser(frame, ref result, in context);
     }
   }
   [System.SerializableAttribute()]

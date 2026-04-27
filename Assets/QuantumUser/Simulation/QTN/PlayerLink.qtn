@@ -1,5 +1,6 @@
 component PlayerLink
 {
+    EntityRef entityRef;
     PlayerRef playerRef;
     FP speed;
 }

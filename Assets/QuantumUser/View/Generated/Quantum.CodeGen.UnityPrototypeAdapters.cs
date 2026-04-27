@@ -49,6 +49,40 @@ namespace Quantum.Prototypes.Unity {
   using RuntimeInitializeOnLoadMethodAttribute = UnityEngine.RuntimeInitializeOnLoadMethodAttribute;
   #endif //;
   
+  [System.SerializableAttribute()]
+  public unsafe partial class BallPrototype : Quantum.QuantumUnityPrototypeAdapter<Quantum.Prototypes.BallPrototype> {
+    public PlayerRef owner;
+    public Quantum.QuantumEntityPrototype entityRef;
+    public Int32 damage;
+    public FP initialSpeed;
+    public QBoolean wasThrown;
+    partial void ConvertUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.BallPrototype prototype);
+    public override Quantum.Prototypes.BallPrototype Convert(Quantum.QuantumEntityPrototypeConverter converter) {
+      var result = new Quantum.Prototypes.BallPrototype();
+      converter.Convert(this.owner, out result.owner);
+      converter.Convert(this.entityRef, out result.entityRef);
+      converter.Convert(this.damage, out result.damage);
+      converter.Convert(this.initialSpeed, out result.initialSpeed);
+      converter.Convert(this.wasThrown, out result.wasThrown);
+      ConvertUser(converter, ref result);
+      return result;
+    }
+  }
+  [System.SerializableAttribute()]
+  public unsafe partial class PlayerLinkPrototype : Quantum.QuantumUnityPrototypeAdapter<Quantum.Prototypes.PlayerLinkPrototype> {
+    public Quantum.QuantumEntityPrototype entityRef;
+    public PlayerRef playerRef;
+    public FP speed;
+    partial void ConvertUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.PlayerLinkPrototype prototype);
+    public override Quantum.Prototypes.PlayerLinkPrototype Convert(Quantum.QuantumEntityPrototypeConverter converter) {
+      var result = new Quantum.Prototypes.PlayerLinkPrototype();
+      converter.Convert(this.entityRef, out result.entityRef);
+      converter.Convert(this.playerRef, out result.playerRef);
+      converter.Convert(this.speed, out result.speed);
+      ConvertUser(converter, ref result);
+      return result;
+    }
+  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

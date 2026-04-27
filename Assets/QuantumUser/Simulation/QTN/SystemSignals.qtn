@@ -1,1 +1,2 @@
 signal OnBlockCollided (PlayerRef playerRef, entity_ref blockRef, entity_ref ballRef);
+signal OnBallCollidedDeadZone(Ball* ball);
