@@ -138,9 +138,11 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.Input))]
   public unsafe partial class InputPrototype : StructPrototype {
     public FP HorizontalInput;
+    public Button ThrowBall;
     partial void MaterializeUser(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context = default) {
         result.HorizontalInput = this.HorizontalInput;
+        result.ThrowBall = this.ThrowBall;
         MaterializeUser(frame, ref result, in context);
     }
   }

@@ -1,3 +1,4 @@
 input{
     FP HorizontalInput;
+    button ThrowBall;
 }

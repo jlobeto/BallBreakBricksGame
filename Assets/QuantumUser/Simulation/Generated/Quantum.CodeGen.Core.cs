@@ -51,6 +51,7 @@ namespace Quantum {
   
   [System.FlagsAttribute()]
   public enum InputButtons : int {
+    ThrowBall = 1 << 0,
   }
   public static unsafe partial class FlagsExtensions {
     public static Boolean IsFlagSet(this InputButtons self, InputButtons flag) {
@@ -511,14 +512,19 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Input {
-    public const Int32 SIZE = 8;
+    public const Int32 SIZE = 24;
     public const Int32 ALIGNMENT = 8;
+    [FieldOffset(20)]
+    private fixed Byte _alignment_padding_[4];
     [FieldOffset(0)]
     public FP HorizontalInput;
+    [FieldOffset(8)]
+    public Button ThrowBall;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 19249;
         hash = hash * 31 + HorizontalInput.GetHashCode();
+        hash = hash * 31 + ThrowBall.GetHashCode();
         return hash;
       }
     }
@@ -527,22 +533,25 @@ namespace Quantum {
     }
     public Boolean IsDown(InputButtons button) {
       switch (button) {
+        case InputButtons.ThrowBall: return ThrowBall.IsDown;
         default: return false;
       }
     }
     public Boolean WasPressed(InputButtons button) {
       switch (button) {
+        case InputButtons.ThrowBall: return ThrowBall.WasPressed;
         default: return false;
       }
     }
     static partial void SerializeCodeGen(void* ptr, FrameSerializer serializer) {
         var p = (Input*)ptr;
         FP.Serialize(&p->HorizontalInput, serializer);
+        Button.Serialize(&p->ThrowBall, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 664;
+    public const Int32 SIZE = 760;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRef<Map> Map;
@@ -566,12 +575,12 @@ namespace Quantum {
     public Int32 PlayerConnectedCount;
     [FieldOffset(608)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 6)]
-    private fixed Byte _input_[48];
-    [FieldOffset(656)]
+    private fixed Byte _input_[144];
+    [FieldOffset(752)]
     public BitSet6 PlayerLastConnectionState;
     public readonly FixedArray<Input> input {
       get {
-        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 8, 6); }
+        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 24, 6); }
       }
     }
     public override readonly Int32 GetHashCode() {
@@ -832,6 +841,7 @@ namespace Quantum {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
       var i = _globals->input.GetPointer(player);
       i->HorizontalInput = input.HorizontalInput;
+      i->ThrowBall = i->ThrowBall.Update(this.Number, input.ThrowBall);
     }
     public Input* GetPlayerInput(PlayerRef player) {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
