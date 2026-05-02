@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,19 +26,25 @@ public class MenuUI : MonoBehaviour
 
     private void OnOnlineClicked(ClickEvent evt)
     {
-        Debug.LogError("ONLINE CLICKED");
         SavePlayerName();
     }
 
     private void OnOfflineClicked(ClickEvent evt)
     {
-        Debug.LogError("OFFLINE CLICKED");
+        Debug.Log("Offline clicked");
         SavePlayerName();
+        WaitForLoadingScreen().Forget();
     }
 
     private void SavePlayerName()
     {
         PlayerDataManager.Instance.SavePlayerName(_userNameField?.value);
     }
-    
+
+    private async UniTask WaitForLoadingScreen()
+    {
+        await GameManager.Instance.GameModeSelected(false);
+        await UniTask.WaitForSeconds(0.1f);
+        _root.style.display = DisplayStyle.None;
+    }
 }

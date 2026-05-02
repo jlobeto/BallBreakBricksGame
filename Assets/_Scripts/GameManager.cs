@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Quantum;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
     private static GameManager _instance;
 
+    [SerializeField] AddressablesManager _addressablesManager;
+    
     private PlayerDataManager _playerDataManager;
     
     private void Awake()
@@ -24,10 +27,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public async UniTask GameModeSelected(bool isOnline)
     {
-        
+        _addressablesManager.ShowLoadingScreen();
     }
-
-
 }
