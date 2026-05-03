@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     public async UniTask GameModeSelected(bool isOnline)
     {
-        _addressablesManager.ShowLoadingScreen();
+        await _addressablesManager.ShowLoadingScreen();
+        await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.
+        await _addressablesManager.LoadSceneAsync("Level1");
     }
 }

@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 public class AddressablesManager : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class AddressablesManager : MonoBehaviour
     public async UniTask ShowLoadingScreen()
     {
         var op = Addressables.InstantiateAsync(loadingScreen);
+        await op;
+    }
+
+    public async UniTask LoadSceneAsync(string sceneName)
+    {
+        var op = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Single, true);
         await op;
     }
 

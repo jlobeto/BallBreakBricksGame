@@ -9,7 +9,6 @@ namespace Quantum
         {
             public EntityRef Entity;
             public PlayerLink* PlayerLink;
-            public Transform2D* Transform;
         }
         
         public override void Update(Frame f, ref Filter filter)

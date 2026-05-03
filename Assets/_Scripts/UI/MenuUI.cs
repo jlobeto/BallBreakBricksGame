@@ -9,6 +9,8 @@ public class MenuUI : MonoBehaviour
     
     private VisualElement _root;
     private TextField _userNameField;
+    private Button _offlineBtn;
+    private Button _onlineBtn;
 
     private void Start()
     {
@@ -17,11 +19,11 @@ public class MenuUI : MonoBehaviour
         _userNameField = _root.Q<TextField>("userName");
         _userNameField.SetValueWithoutNotify(PlayerDataManager.Instance.UserName);
         
-        var offlineBtn = _root.Q<Button>("offlineBtn");
-        var onlineBtn = _root.Q<Button>("onlineBtn");
+        _offlineBtn = _root.Q<Button>("offlineBtn");
+        _onlineBtn = _root.Q<Button>("onlineBtn");
         
-        offlineBtn.RegisterCallback<ClickEvent>(OnOfflineClicked);
-        onlineBtn.RegisterCallback<ClickEvent>(OnOnlineClicked);
+        _offlineBtn.RegisterCallback<ClickEvent>(OnOfflineClicked);
+        _onlineBtn.RegisterCallback<ClickEvent>(OnOnlineClicked);
     }
 
     private void OnOnlineClicked(ClickEvent evt)
@@ -33,7 +35,7 @@ public class MenuUI : MonoBehaviour
     {
         Debug.Log("Offline clicked");
         SavePlayerName();
-        WaitForLoadingScreen().Forget();
+        LoadScene();
     }
 
     private void SavePlayerName()
@@ -41,10 +43,17 @@ public class MenuUI : MonoBehaviour
         PlayerDataManager.Instance.SavePlayerName(_userNameField?.value);
     }
 
-    private async UniTask WaitForLoadingScreen()
+    private void LoadScene()
     {
-        await GameManager.Instance.GameModeSelected(false);
-        await UniTask.WaitForSeconds(0.1f);
         _root.style.display = DisplayStyle.None;
+        GameManager.Instance.GameModeSelected(false).Forget();
+    }
+
+    private void OnDestroy()
+    {
+        if(_offlineBtn != null)
+            _offlineBtn.UnregisterCallback<ClickEvent>(OnOfflineClicked);
+        if(_onlineBtn != null)
+            _onlineBtn.UnregisterCallback<ClickEvent>(OnOnlineClicked);
     }
 }
