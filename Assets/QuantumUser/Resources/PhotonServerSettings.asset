@@ -32,4 +32,5 @@ MonoBehaviour:
     ClientLogging: 2
   PlayerTtlInSeconds: 0
   EmptyRoomTtlInSeconds: 0
+  EnableCrc: 0
   BestRegionSummaryKey: Quantum.BestRegionSummary

@@ -380,6 +380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _addressablesManager: {fileID: 2141384009}
+  startQuantumSimulationManager: {fileID: 2141384008}
+  menuUI: {fileID: 973750951}
 --- !u!4 &2141384007
 Transform:
   m_ObjectHideFlags: 0
@@ -407,6 +409,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e40de958150cb54a9458e7cd61703cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartQuantumSimulationManager
+  runtimeConfig:
+    Seed: 0
+    Map:
+      Id:
+        Value: 487191826126352098
+    SimulationConfig:
+      Id:
+        Value: 654058214442534560
+    SystemsConfig:
+      Id:
+        Value: 453886337120267269
+    GameConfig:
+      Id:
+        Value: 0
+    DefaultPlayerAvatar:
+      Id:
+        Value: 1399129362211526553
+    BallCommonConfig:
+      Id:
+        Value: 322403564853445532
+    PlayerMapConfig:
+      Id:
+        Value: 431261063186666598
+  runtimePlayer:
+    PlayerAvatar:
+      Id:
+        Value: 1399129362211526553
+    PlayerNickname: 
 --- !u!114 &2141384009
 MonoBehaviour:
   m_ObjectHideFlags: 0

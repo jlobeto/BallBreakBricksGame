@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class PlayerDataManager
 {
-    private const string PLAYER_DATA_KEY = "PlayerData";
-
+    private string PlayerDataKey =>  $"PlayerData-{Application.dataPath.GetHashCode()}";
     private static PlayerDataManager _instance;
     public static PlayerDataManager Instance
     {
@@ -22,7 +21,7 @@ public class PlayerDataManager
     
     private PlayerDataManager()
     {
-        var savedData = PlayerPrefs.GetString(PLAYER_DATA_KEY, null);
+        var savedData = PlayerPrefs.GetString(PlayerDataKey, null);
         if(string.IsNullOrEmpty(savedData))
         {
             _myPlayerData = new PlayerData();
@@ -64,7 +63,7 @@ public class PlayerDataManager
     
     private void Save()
     {
-        PlayerPrefs.SetString(PLAYER_DATA_KEY, JsonUtility.ToJson(_myPlayerData));
+        PlayerPrefs.SetString(PlayerDataKey, JsonUtility.ToJson(_myPlayerData));
         PlayerPrefs.Save();
     }
 }

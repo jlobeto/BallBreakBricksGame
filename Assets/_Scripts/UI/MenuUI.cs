@@ -7,6 +7,8 @@ public class MenuUI : MonoBehaviour
 {
     [SerializeField] private UIDocument menuUIDocument;
     
+    public Action<bool, string> OnPlayModeClicked;
+    
     private VisualElement _root;
     private TextField _userNameField;
     private Button _offlineBtn;
@@ -17,7 +19,8 @@ public class MenuUI : MonoBehaviour
         _root = menuUIDocument.rootVisualElement;
         
         _userNameField = _root.Q<TextField>("userName");
-        _userNameField.SetValueWithoutNotify(PlayerDataManager.Instance.UserName);
+        if(!string.IsNullOrEmpty(PlayerDataManager.Instance.UserName))
+            _userNameField.SetValueWithoutNotify(PlayerDataManager.Instance.UserName);
         
         _offlineBtn = _root.Q<Button>("offlineBtn");
         _onlineBtn = _root.Q<Button>("onlineBtn");
@@ -29,13 +32,13 @@ public class MenuUI : MonoBehaviour
     private void OnOnlineClicked(ClickEvent evt)
     {
         SavePlayerName();
+        LoadScene(true);
     }
 
     private void OnOfflineClicked(ClickEvent evt)
     {
-        Debug.Log("Offline clicked");
         SavePlayerName();
-        LoadScene();
+        LoadScene(false);
     }
 
     private void SavePlayerName()
@@ -43,10 +46,12 @@ public class MenuUI : MonoBehaviour
         PlayerDataManager.Instance.SavePlayerName(_userNameField?.value);
     }
 
-    private void LoadScene()
+    private void LoadScene(bool isOnline)
     {
         _root.style.display = DisplayStyle.None;
-        GameManager.Instance.GameModeSelected(false).Forget();
+        
+        var roomName = _root.Q<TextField>("roomName");
+        OnPlayModeClicked?.Invoke(isOnline, roomName.value);
     }
 
     private void OnDestroy()

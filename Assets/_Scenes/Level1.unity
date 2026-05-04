@@ -11656,7 +11656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1725644050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14751,7 +14751,7 @@ MonoBehaviour:
   AssetRef:
     Id:
       Value: 487191826126352098
-  BakeAllMode: 112
+  BakeAllMode: 240
   NavMeshSerializeType: 0
   StaticCollider2DReferences: []
   StaticCollider3DReferences: []

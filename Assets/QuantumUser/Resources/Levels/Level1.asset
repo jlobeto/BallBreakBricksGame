@@ -20,7 +20,7 @@ MonoBehaviour:
     Id:
       Value: 0
   Scene: Level1
-  ScenePath: Assets/Scenes/Level1.unity
+  ScenePath: Assets/_Scenes/Level1.unity
   SceneGuid: 2cda990e2423bbf4892e6590ba056729
   WorldSize: 256
   BucketsCount: 16

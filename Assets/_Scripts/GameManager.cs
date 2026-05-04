@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     [SerializeField] AddressablesManager _addressablesManager;
+    [SerializeField] StartQuantumSimulationManager startQuantumSimulationManager;
+    [SerializeField] private MenuUI menuUI;
     
     private PlayerDataManager _playerDataManager;
     
@@ -25,12 +27,37 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        
+        menuUI.OnPlayModeClicked += OnPlayModeClicked;
     }
 
-    public async UniTask GameModeSelected(bool isOnline)
+    private void OnPlayModeClicked(bool isOnlineMode, string roomName)
+    {
+        if (isOnlineMode)
+            OnlinePath(roomName).Forget();
+        else
+            OfflinePath().Forget();
+    }
+
+    private async UniTask OfflinePath()
+    {
+        await ShowLoadingScreen();
+        var scene = await _addressablesManager.LoadSceneAsync("Level1");
+        await scene.ActivateAsync();
+
+    }
+
+    private async UniTask OnlinePath(string roomName)
+    {
+        await ShowLoadingScreen();
+        var scene = await _addressablesManager.LoadSceneAsync("Level1");
+        scene.ActivateAsync();
+        await startQuantumSimulationManager.Matchmaking(roomName, null);
+    }
+
+    private async UniTask ShowLoadingScreen()
     {
         await _addressablesManager.ShowLoadingScreen();
-        await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.
-        await _addressablesManager.LoadSceneAsync("Level1");
+        await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.   
     }
 }
