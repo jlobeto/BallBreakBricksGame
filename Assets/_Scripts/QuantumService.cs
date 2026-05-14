@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Photon.Deterministic;
 using Photon.Realtime;
@@ -18,10 +20,11 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
     private bool _isPingingRegions;
     private string _bestRegion;
     private string _roonName;
+    private bool _callClientService;
 
     private void Awake()
     {
-        QuantumCallback.Subscribe(this, (CallbackGameStarted c) => OnGameStarted(c.Game, c.IsResync), game => game == QuantumRunner.Default.Game);
+        //QuantumCallback.Subscribe(this, (CallbackGameStarted c) => OnGameStarted(c.Game, c.IsResync), game => game == QuantumRunner.Default.Game);
     }
 
     private void Start()
@@ -29,6 +32,16 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
         _client = new RealtimeClient();
         _client.AddCallbackTarget(this);
         _client.StateChanged += OnClientStateChanged;
+        StartCoroutine(CallClientService());
+    }
+
+    private IEnumerator CallClientService()
+    {
+        while (_callClientService)
+        {
+            yield return new WaitForSeconds(0.1f);//recommended by photon (10 times per second).
+            _client?.Service();
+        }
     }
 
     private void OnDestroy()
@@ -72,7 +85,6 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
         }
 
         _roonName = roomName;
-        
         
         try
         {
@@ -123,7 +135,10 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
                 Communicator = new QuantumNetworkCommunicator(_client),
             };
 
-            var runner = await SessionRunner.StartAsync(sessionRunnerArguments);
+            Debug.LogError($"SessionRunner.StartAsync(sessionRunnerArguments);");
+            await UniTask.WaitForSeconds(1);
+            await SessionRunner.StartAsync(sessionRunnerArguments);
+            
             EventBus.Publish(new EventOnLoadingChanged(){loadingTitle = "Game Loaded..."}); 
         
             runtimePlayer.PlayerNickname = PlayerDataManager.Instance.UserName;
@@ -138,33 +153,6 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
             return false;
         }
         
-    }
-
-    private void StartQuantum(RealtimeClient client)
-    {
-        var sessionRunnerArguments = new SessionRunner.Arguments {
-            RunnerFactory = QuantumRunnerUnityFactory.DefaultFactory,
-            GameParameters = QuantumRunnerUnityFactory.CreateGameParameters,
-            ClientId = client.UserId,
-            RuntimeConfig = runtimeConfig,
-            SessionConfig = QuantumDeterministicSessionConfigAsset.DefaultConfig,
-            GameMode = DeterministicGameMode.Multiplayer,
-            PlayerCount = 2,
-            StartGameTimeoutInSeconds = 10,
-            Communicator = new QuantumNetworkCommunicator(client),
-        };
-        
-        SessionRunner.Start(sessionRunnerArguments);
-    }
-    
-    private void OnGameStarted(QuantumGame callbackGame, bool callbackIsResync)
-    {
-        EventBus.Publish(new EventOnLoadingChanged(){loadingTitle = "Game Loaded..."}); 
-        
-        runtimePlayer.PlayerNickname = PlayerDataManager.Instance.UserName;
-        callbackGame.AddPlayer(runtimePlayer);
-        
-        EventBus.Publish(new EventOnQuantumGameStarted());
     }
     
     private EnterRoomArgs BuildEnterRoomArgs(MatchmakingArguments arguments)
@@ -245,9 +233,6 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
     public void OnJoinedRoom()
     {
         Debug.LogError($"OnJoinedRoom()");
-        
-        EventBus.Publish(new EventOnLoadingChanged(){loadingTitle = "Starting Game..."});
-        //StartQuantum(_client);
     }
 
     public void OnJoinRoomFailed(short returnCode, string message)
