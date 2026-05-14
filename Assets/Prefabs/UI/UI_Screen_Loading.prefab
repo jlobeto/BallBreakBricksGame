@@ -96,7 +96,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 15.26
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 8871756554537633631}
   - component: {fileID: 3932200642227598032}
   - component: {fileID: 893664472351858358}
+  - component: {fileID: 6358368328885816008}
   m_Layer: 5
   m_Name: UI_Screen_Loading
   m_TagString: Untagged
@@ -241,6 +242,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6358368328885816008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6214061153198453137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0036afd49960c4f8c3054738e4a715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadingScreen
+  loadingTitle: {fileID: 7833518267970670064}
 --- !u!1 &8583526664973034311
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Quantum;
+using Quantum.Menu;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     [SerializeField] AddressablesManager _addressablesManager;
-    [SerializeField] StartQuantumSimulationManager startQuantumSimulationManager;
+    [SerializeField] QuantumService quantumService;
+    
     [SerializeField] private MenuUI menuUI;
     
     private PlayerDataManager _playerDataManager;
@@ -52,12 +53,13 @@ public class GameManager : MonoBehaviour
         await ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
         scene.ActivateAsync();
-        await startQuantumSimulationManager.Matchmaking(roomName, null);
+        quantumService.Matchmaking(roomName).Forget();
+
     }
 
     private async UniTask ShowLoadingScreen()
     {
         await _addressablesManager.ShowLoadingScreen();
-        await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.   
+        //await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.   
     }
 }

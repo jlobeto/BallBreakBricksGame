@@ -1,41 +1,47 @@
 using System;
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
-    [SerializeField] private UIDocument menuUIDocument;
+    [SerializeField] private TMP_InputField userNameField;
+    [SerializeField] private TMP_InputField roomId;
+    [SerializeField] private Button offlineBtn;
+    [SerializeField] private Button onlineBtn;
+    [SerializeField] private TMP_Text bestRegionText;
     
     public Action<bool, string> OnPlayModeClicked;
     
-    private VisualElement _root;
-    private TextField _userNameField;
-    private Button _offlineBtn;
-    private Button _onlineBtn;
 
     private void Start()
     {
-        _root = menuUIDocument.rootVisualElement;
-        
-        _userNameField = _root.Q<TextField>("userName");
         if(!string.IsNullOrEmpty(PlayerDataManager.Instance.UserName))
-            _userNameField.SetValueWithoutNotify(PlayerDataManager.Instance.UserName);
+            userNameField.text = PlayerDataManager.Instance.UserName;
         
-        _offlineBtn = _root.Q<Button>("offlineBtn");
-        _onlineBtn = _root.Q<Button>("onlineBtn");
+        offlineBtn.onClick.RemoveAllListeners();
+        offlineBtn.onClick.AddListener(OnOfflineClicked);
         
-        _offlineBtn.RegisterCallback<ClickEvent>(OnOfflineClicked);
-        _onlineBtn.RegisterCallback<ClickEvent>(OnOnlineClicked);
+        onlineBtn.onClick.RemoveAllListeners();
+        onlineBtn.onClick.AddListener(OnOnlineClicked);
+        
+        EventBus.AddListener<EventOnRegionReceived>(OnRegionSelected);
     }
 
-    private void OnOnlineClicked(ClickEvent evt)
+    private void OnRegionSelected(EventOnRegionReceived region)
+    {
+        bestRegionText.text = $"Best Region: {region.regionCode} - {region.ping}ms";
+    }
+
+    private void OnOnlineClicked()
     {
         SavePlayerName();
         LoadScene(true);
     }
 
-    private void OnOfflineClicked(ClickEvent evt)
+    private void OnOfflineClicked()
     {
         SavePlayerName();
         LoadScene(false);
@@ -43,22 +49,19 @@ public class MenuUI : MonoBehaviour
 
     private void SavePlayerName()
     {
-        PlayerDataManager.Instance.SavePlayerName(_userNameField?.value);
+        PlayerDataManager.Instance.SavePlayerName(userNameField.text);
     }
 
     private void LoadScene(bool isOnline)
     {
-        _root.style.display = DisplayStyle.None;
-        
-        var roomName = _root.Q<TextField>("roomName");
-        OnPlayModeClicked?.Invoke(isOnline, roomName.value);
+        OnPlayModeClicked?.Invoke(isOnline, roomId.text);
     }
 
     private void OnDestroy()
     {
-        if(_offlineBtn != null)
-            _offlineBtn.UnregisterCallback<ClickEvent>(OnOfflineClicked);
-        if(_onlineBtn != null)
-            _onlineBtn.UnregisterCallback<ClickEvent>(OnOnlineClicked);
+        offlineBtn?.onClick.RemoveAllListeners();
+        onlineBtn?.onClick.RemoveAllListeners();
+        EventBus.RemoveListener<EventOnRegionReceived>(OnRegionSelected);
     }
+
 }

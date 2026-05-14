@@ -16,6 +16,7 @@ public class PlayerDataManager
     }
 
     public string UserName => _myPlayerData?.PlayerName;
+    public string PhotonRegionSummary => _myPlayerData?.PhotonRegionSummary;
     
     private PlayerData _myPlayerData;
     
@@ -60,6 +61,13 @@ public class PlayerDataManager
         _myPlayerData.WinRate = winRate;
         Save();
     }
+
+    public void SavePhotonRegionSummary(string photonRegionSummary)
+    {
+        if (string.IsNullOrEmpty(photonRegionSummary)) return;
+        _myPlayerData.PhotonRegionSummary = photonRegionSummary;
+        Save();
+    }
     
     private void Save()
     {
@@ -74,4 +82,5 @@ public class PlayerData
     public int TotalWins;
     public string PlayerName;
     public float WinRate;
+    public string PhotonRegionSummary;
 }
