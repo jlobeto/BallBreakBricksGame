@@ -135,8 +135,6 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
                 Communicator = new QuantumNetworkCommunicator(_client),
             };
 
-            Debug.LogError($"SessionRunner.StartAsync(sessionRunnerArguments);");
-            await UniTask.WaitForSeconds(1);
             await SessionRunner.StartAsync(sessionRunnerArguments);
             
             EventBus.Publish(new EventOnLoadingChanged(){loadingTitle = "Game Loaded..."}); 
