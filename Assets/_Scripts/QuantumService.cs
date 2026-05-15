@@ -1,18 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using Photon.Deterministic;
 using Photon.Realtime;
 using Quantum;
-using Quantum.Menu;
 using UnityEngine;
+using RuntimeConfig = Quantum.RuntimeConfig;
 
 public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingCallbacks
 {
-    [SerializeField] QuantumMenuConnectionBehaviourSDK quantumConnectionSdk;
-
     [SerializeField] private RuntimeConfig runtimeConfig;
     [SerializeField] private RuntimePlayer runtimePlayer;
 
@@ -88,6 +85,8 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
         
         try
         {
+            _callClientService = true; 
+            
             // IMPORTANT: this API disconnects the client used for region discovery.
             // Use a temporary client so it cannot disconnect our gameplay client.
             var regionClient = new RealtimeClient();
@@ -152,6 +151,44 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
         }
         
     }
+
+    public async UniTask<bool> StartLocalSimulation()
+    {
+        var arguments = new SessionRunner.Arguments {
+            RunnerFactory         = QuantumRunnerUnityFactory.DefaultFactory,
+            GameParameters        = QuantumRunnerUnityFactory.CreateGameParameters,
+            RuntimeConfig         = runtimeConfig,
+            SessionConfig         = QuantumDeterministicSessionConfigAsset.DefaultConfig,
+            GameMode              = DeterministicGameMode.Local,
+            RunnerId              = "LOCALDEBUG",
+            PlayerCount           = 2
+        };
+
+        try
+        {
+            await SessionRunner.StartAsync(arguments);
+            EventBus.Publish(new EventOnLoadingChanged(){loadingTitle = "Game Loaded..."}); 
+        
+            runtimePlayer.PlayerNickname = PlayerDataManager.Instance.UserName;
+            QuantumRunner.DefaultGame.AddPlayer(0, runtimePlayer);
+
+            var secondPlayer = new RuntimePlayer
+            {
+                PlayerAvatar = runtimePlayer.PlayerAvatar,
+                PlayerNickname = "Player 2"
+            };
+
+            QuantumRunner.DefaultGame.AddPlayer(1, secondPlayer);
+            EventBus.Publish(new EventOnQuantumGameStarted());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+
+        return true;
+    }
     
     private EnterRoomArgs BuildEnterRoomArgs(MatchmakingArguments arguments)
     {
@@ -184,28 +221,28 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
 
     public void OnConnected()
     {
-        Debug.LogError($"OnConnected()");
+        Debug.Log($"OnConnected()");
     }
 
     public void OnConnectedToMaster()
     {
-        Debug.LogError($"OnConnectedToMaster()");
+        Debug.Log($"OnConnectedToMaster()");
     }
 
     public void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogError($"OnDisconnected() {cause}");
+        Debug.Log($"OnDisconnected() {cause}");
     }
 
     public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
     {
-        Debug.LogError($"OnCustomAuthenticationResponse()");    
+        Debug.Log($"OnCustomAuthenticationResponse()");    
 
     }
 
     public void OnCustomAuthenticationFailed(string debugMessage)
     {
-        Debug.LogError($"OnCustomAuthenticationFailed()");    
+        Debug.Log($"OnCustomAuthenticationFailed()");    
 
     }
 
@@ -219,35 +256,35 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
 
     public void OnCreatedRoom()
     {
-        Debug.LogError($"OnCreatedRoom()");    
+        Debug.Log($"OnCreatedRoom()");    
     }
 
     public void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.LogError($"OnCreateRoomFailed()");    
+        Debug.Log($"OnCreateRoomFailed()");    
 
     }
 
     public void OnJoinedRoom()
     {
-        Debug.LogError($"OnJoinedRoom()");
+        Debug.Log($"OnJoinedRoom()");
     }
 
     public void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogError($"OnJoinRoomFailed()");    
+        Debug.Log($"OnJoinRoomFailed()");    
 
     }
 
     public void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.LogError($"OnJoinRandomFailed()");    
+        Debug.Log($"OnJoinRandomFailed()");    
 
     }
 
     public void OnLeftRoom()
     {
-        Debug.LogError($"OnLeftRoom()");    
+        Debug.Log($"OnLeftRoom()");    
 
     }
 

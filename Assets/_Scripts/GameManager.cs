@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         await ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
         await scene.ActivateAsync();
+        quantumService.StartLocalSimulation().Forget();
 
     }
 
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         await ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
-        scene.ActivateAsync();
+        await scene.ActivateAsync();
         quantumService.Matchmaking(roomName).Forget();
 
     }

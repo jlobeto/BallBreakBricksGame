@@ -2565,7 +2565,6 @@ GameObject:
   - component: {fileID: 2141384006}
   - component: {fileID: 2141384009}
   - component: {fileID: 2141384008}
-  - component: {fileID: 2141384010}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2615,7 +2614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e40de958150cb54a9458e7cd61703cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartQuantumSimulationManager
-  quantumConnectionSdk: {fileID: 2141384010}
   runtimeConfig:
     Seed: 0
     Map:
@@ -2656,28 +2654,6 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
---- !u!114 &2141384010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141384005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dcfc1b411213344b9aaa83cd2716782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Quantum.Menu::Quantum.Menu.QuantumMenuConnectionBehaviourSDK
-  OnBeforeConnect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBeforeDisconnect:
-    m_PersistentCalls:
-      m_Calls: []
-  OnProgress:
-    m_PersistentCalls:
-      m_Calls: []
-  EnableMppm: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
