@@ -52,7 +52,7 @@ namespace Quantum {
   public unsafe partial class Frame {
     public unsafe partial struct FrameEvents {
       static partial void GetEventTypeCountCodeGen(ref Int32 eventCount) {
-        eventCount = 2;
+        eventCount = 3;
       }
       static partial void GetParentEventIDCodeGen(Int32 eventID, ref Int32 parentEventID) {
         switch (eventID) {
@@ -62,6 +62,7 @@ namespace Quantum {
       static partial void GetEventTypeCodeGen(Int32 eventID, ref System.Type result) {
         switch (eventID) {
           case EventOnBlockReceivedDamage.ID: result = typeof(EventOnBlockReceivedDamage); return;
+          case EventOnPlayerAdded.ID: result = typeof(EventOnPlayerAdded); return;
           default: break;
         }
       }
@@ -69,6 +70,12 @@ namespace Quantum {
         var ev = _f.Context.AcquireEvent<EventOnBlockReceivedDamage>(EventOnBlockReceivedDamage.ID);
         ev.entityRef = entityRef;
         ev.currentLives = currentLives;
+        _f.AddEvent(ev);
+        return ev;
+      }
+      public EventOnPlayerAdded OnPlayerAdded(PlayerRef playerRef) {
+        var ev = _f.Context.AcquireEvent<EventOnPlayerAdded>(EventOnPlayerAdded.ID);
+        ev.playerRef = playerRef;
         _f.AddEvent(ev);
         return ev;
       }
@@ -97,6 +104,31 @@ namespace Quantum {
         var hash = 41;
         hash = hash * 31 + entityRef.GetHashCode();
         hash = hash * 31 + currentLives.GetHashCode();
+        return hash;
+      }
+    }
+  }
+  public unsafe partial class EventOnPlayerAdded : EventBase {
+    public new const Int32 ID = 2;
+    public PlayerRef playerRef;
+    protected EventOnPlayerAdded(Int32 id, EventFlags flags) : 
+        base(id, flags) {
+    }
+    public EventOnPlayerAdded() : 
+        base(2, EventFlags.Server|EventFlags.Client) {
+    }
+    public new QuantumGame Game {
+      get {
+        return (QuantumGame)base.Game;
+      }
+      set {
+        base.Game = value;
+      }
+    }
+    public override Int32 GetHashCode() {
+      unchecked {
+        var hash = 43;
+        hash = hash * 31 + playerRef.GetHashCode();
         return hash;
       }
     }

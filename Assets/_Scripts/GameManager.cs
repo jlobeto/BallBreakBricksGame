@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     {
         await ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
+        await UniTask.WaitForEndOfFrame();
+        await UniTask.WaitForEndOfFrame();
         await scene.ActivateAsync();
         quantumService.StartLocalSimulation().Forget();
 

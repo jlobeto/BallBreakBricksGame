@@ -3,3 +3,8 @@ event OnBlockReceivedDamage
     entity_ref entityRef;
     int currentLives;
 }
+
+event OnPlayerAdded
+{
+    player_ref playerRef;
+}

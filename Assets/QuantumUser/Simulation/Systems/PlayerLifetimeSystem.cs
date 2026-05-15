@@ -31,7 +31,7 @@ namespace Quantum
 
             var gameState = f.Unsafe.GetOrAddSingletonPointer<GameplayState>();
             gameState->CreatePlayerBall(f, playerTransform->Position, player);
-
+            f.Events.OnPlayerAdded(player);
         }
 
         
