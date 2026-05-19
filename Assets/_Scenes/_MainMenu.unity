@@ -2631,6 +2631,9 @@ MonoBehaviour:
     PlayerMapConfig:
       Id:
         Value: 431261063186666598
+    ScoreConfig:
+      Id:
+        Value: 472296067576100489
   runtimePlayer:
     PlayerAvatar:
       Id:

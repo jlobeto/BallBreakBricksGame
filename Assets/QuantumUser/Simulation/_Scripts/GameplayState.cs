@@ -24,5 +24,16 @@ namespace Quantum
             var ballTransform = f.Unsafe.GetPointer<Transform2D>(ballEntityRef);
             ballTransform->Position = playerPosition + FPVector2.Up;
         }
+
+        public void AddScore(Frame f, PlayerRef playerRef, int score)
+        {
+            var dict = f.ResolveDictionary(scoresDict);
+            if (!dict.ContainsKey(playerRef))
+                dict.Add(playerRef, 0);
+            
+            dict[playerRef] += score;
+            
+            f.Events.OnScoreUpdate(playerRef, dict[playerRef]);
+        }
     }
 }

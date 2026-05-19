@@ -15,7 +15,7 @@ namespace Quantum
             if (f.Has<Block>(info.Other))
             {
                 //Debug.Log($"Collision Enter - {info.Other.GetName(f)}");
-                f.Signals.OnBlockCollided(0, info.Other, info.Entity);
+                f.Signals.OnBlockCollided(info.Other, info.Entity);
             }
         }
 

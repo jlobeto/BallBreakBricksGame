@@ -8,3 +8,9 @@ event OnPlayerAdded
 {
     player_ref playerRef;
 }
+
+event OnScoreUpdate
+{
+    player_ref playerRef;
+    int newScore;
+}

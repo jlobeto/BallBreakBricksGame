@@ -6,7 +6,7 @@ namespace Quantum
 
     public unsafe class BlocksSystem : SystemSignalsOnly, ISignalOnBlockCollided
     {
-        public void OnBlockCollided(Frame f, PlayerRef playerRef, EntityRef blockRef, EntityRef ballRef)
+        public void OnBlockCollided(Frame f, EntityRef blockRef, EntityRef ballRef)
         {
             if (!f.Unsafe.TryGetPointer<Block>(blockRef, out var block))
                 return;

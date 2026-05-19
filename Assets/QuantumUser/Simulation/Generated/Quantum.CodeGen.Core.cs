@@ -761,7 +761,7 @@ namespace Quantum {
     }
   }
   public unsafe partial interface ISignalOnBlockCollided : ISignal {
-    void OnBlockCollided(Frame f, PlayerRef playerRef, EntityRef blockRef, EntityRef ballRef);
+    void OnBlockCollided(Frame f, EntityRef blockRef, EntityRef ballRef);
   }
   public unsafe partial interface ISignalOnBallCollidedDeadZone : ISignal {
     void OnBallCollidedDeadZone(Frame f, Ball* ball);
@@ -855,12 +855,12 @@ namespace Quantum {
       Physics3D?.Init(_globals->PhysicsState3D.MapStaticCollidersState.TrackedMap);
     }
     public unsafe partial struct FrameSignals {
-      public void OnBlockCollided(PlayerRef playerRef, EntityRef blockRef, EntityRef ballRef) {
+      public void OnBlockCollided(EntityRef blockRef, EntityRef ballRef) {
         var array = _f._ISignalOnBlockCollidedSystems;
         for (Int32 i = 0; i < array.Length; ++i) {
           var s = array[i];
           if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
-            s.OnBlockCollided(_f, playerRef, blockRef, ballRef);
+            s.OnBlockCollided(_f, blockRef, ballRef);
           }
         }
       }

@@ -4,5 +4,6 @@
     {
         public AssetRef<BallConfig> BallCommonConfig;
         public AssetRef<PlayerMapConfig> PlayerMapConfig;
+        public AssetRef<ScoreSystemConfig> ScoreConfig;
     }
 }

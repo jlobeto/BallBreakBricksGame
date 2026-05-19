@@ -52,7 +52,7 @@ namespace Quantum {
   public unsafe partial class Frame {
     public unsafe partial struct FrameEvents {
       static partial void GetEventTypeCountCodeGen(ref Int32 eventCount) {
-        eventCount = 3;
+        eventCount = 4;
       }
       static partial void GetParentEventIDCodeGen(Int32 eventID, ref Int32 parentEventID) {
         switch (eventID) {
@@ -63,6 +63,7 @@ namespace Quantum {
         switch (eventID) {
           case EventOnBlockReceivedDamage.ID: result = typeof(EventOnBlockReceivedDamage); return;
           case EventOnPlayerAdded.ID: result = typeof(EventOnPlayerAdded); return;
+          case EventOnScoreUpdate.ID: result = typeof(EventOnScoreUpdate); return;
           default: break;
         }
       }
@@ -76,6 +77,13 @@ namespace Quantum {
       public EventOnPlayerAdded OnPlayerAdded(PlayerRef playerRef) {
         var ev = _f.Context.AcquireEvent<EventOnPlayerAdded>(EventOnPlayerAdded.ID);
         ev.playerRef = playerRef;
+        _f.AddEvent(ev);
+        return ev;
+      }
+      public EventOnScoreUpdate OnScoreUpdate(PlayerRef playerRef, Int32 newScore) {
+        var ev = _f.Context.AcquireEvent<EventOnScoreUpdate>(EventOnScoreUpdate.ID);
+        ev.playerRef = playerRef;
+        ev.newScore = newScore;
         _f.AddEvent(ev);
         return ev;
       }
@@ -129,6 +137,33 @@ namespace Quantum {
       unchecked {
         var hash = 43;
         hash = hash * 31 + playerRef.GetHashCode();
+        return hash;
+      }
+    }
+  }
+  public unsafe partial class EventOnScoreUpdate : EventBase {
+    public new const Int32 ID = 3;
+    public PlayerRef playerRef;
+    public Int32 newScore;
+    protected EventOnScoreUpdate(Int32 id, EventFlags flags) : 
+        base(id, flags) {
+    }
+    public EventOnScoreUpdate() : 
+        base(3, EventFlags.Server|EventFlags.Client) {
+    }
+    public new QuantumGame Game {
+      get {
+        return (QuantumGame)base.Game;
+      }
+      set {
+        base.Game = value;
+      }
+    }
+    public override Int32 GetHashCode() {
+      unchecked {
+        var hash = 47;
+        hash = hash * 31 + playerRef.GetHashCode();
+        hash = hash * 31 + newScore.GetHashCode();
         return hash;
       }
     }
