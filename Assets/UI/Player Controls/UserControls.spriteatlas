@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UserControls
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 4
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 078b5f08638e0ad4e8f14f9d06e749f4, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 28698850b0de4d74a9506569f6a74be3: 7264887134179021956
+    - 76100af2fe4209a48a5d9fb17d2eba4d: 7792173154823317725
+    - a04edc6a72c1e534e8c0006110de9609: -7373550244198019380
+    - 43b6ee2b21a32af4697afdbb2a74c7ac: -6289264602547766155
+    - dbe4273eb07b1b54290811c5b39a14a4: 6051988996522264467
+    - d8a708ce5ca62c24684398282a72fc20: 6974114764872740748
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 7264887134179021956, guid: 28698850b0de4d74a9506569f6a74be3, type: 3}
+  - {fileID: 7792173154823317725, guid: 76100af2fe4209a48a5d9fb17d2eba4d, type: 3}
+  - {fileID: -7373550244198019380, guid: a04edc6a72c1e534e8c0006110de9609, type: 3}
+  - {fileID: -6289264602547766155, guid: 43b6ee2b21a32af4697afdbb2a74c7ac, type: 3}
+  - {fileID: 6051988996522264467, guid: dbe4273eb07b1b54290811c5b39a14a4, type: 3}
+  - {fileID: 6974114764872740748, guid: d8a708ce5ca62c24684398282a72fc20, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ChatGPT Image May 25, 2026, 11_03_36 PM_0
+  - ChatGPT Image May 25, 2026, 11_05_20 PM_0
+  - ChatGPT Image May 25, 2026, 11_28_24 PM_0
+  - ChatGPT Image May 25, 2026, 11_32_24 PM_0
+  - ChatGPT Image May 25, 2026, 11_32_51 PM_0
+  - ChatGPT Image May 25, 2026, 11_14_24 PM_0
+  m_RenderDataMap: {}
+  m_Tag: UserControls
+  m_IsVariant: 0

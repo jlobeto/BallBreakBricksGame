@@ -1,4 +1,5 @@
 using Photon.Client;
+using Photon.Deterministic;
 using Photon.Realtime;
 using Quantum;
 using TMPro;
@@ -15,7 +16,15 @@ public class PlayerNamesUI : MonoBehaviour
 
     private void OnPlayerAdded(EventOnPlayerAdded data)
     {
+        if (data.Game.Session.GameMode is DeterministicGameMode.Local)
+        {
+            leftPlayerName.enabled = false;
+            rightPlayerName.enabled = false;
+            return;
+        }
+        
         var player = data.Game.Frames.Verified.GetPlayerData(data.playerRef);
+        
         if(data.playerRef == 0)
             leftPlayerName.text = player.PlayerNickname;
         else 

@@ -814,26 +814,26 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: QUANTUM_XY
-    EmbeddedLinux: QUANTUM_XY
-    GameCoreScarlett: QUANTUM_XY
-    GameCoreXboxOne: QUANTUM_XY
-    Kepler: QUANTUM_XY
-    LinuxHeadlessSimulation: QUANTUM_XY
+    Android: QUANTUM_XY;DOTWEEN
+    EmbeddedLinux: QUANTUM_XY;DOTWEEN
+    GameCoreScarlett: QUANTUM_XY;DOTWEEN
+    GameCoreXboxOne: QUANTUM_XY;DOTWEEN
+    Kepler: QUANTUM_XY;DOTWEEN
+    LinuxHeadlessSimulation: QUANTUM_XY;DOTWEEN
     Lumin: QUANTUM_XY
-    Nintendo Switch: QUANTUM_XY
-    Nintendo Switch 2: QUANTUM_XY
-    PS4: QUANTUM_XY
-    PS5: QUANTUM_XY
-    QNX: QUANTUM_XY
+    Nintendo Switch: QUANTUM_XY;DOTWEEN
+    Nintendo Switch 2: QUANTUM_XY;DOTWEEN
+    PS4: QUANTUM_XY;DOTWEEN
+    PS5: QUANTUM_XY;DOTWEEN
+    QNX: QUANTUM_XY;DOTWEEN
     Stadia: QUANTUM_XY
-    Standalone: QUANTUM_XY
-    VisionOS: QUANTUM_XY
-    WebGL: QUANTUM_XY
-    Windows Store Apps: QUANTUM_XY
-    XboxOne: QUANTUM_XY
-    iPhone: QUANTUM_XY
-    tvOS: QUANTUM_XY
+    Standalone: QUANTUM_XY;DOTWEEN
+    VisionOS: QUANTUM_XY;DOTWEEN
+    WebGL: QUANTUM_XY;DOTWEEN
+    Windows Store Apps: QUANTUM_XY;DOTWEEN
+    XboxOne: QUANTUM_XY;DOTWEEN
+    iPhone: QUANTUM_XY;DOTWEEN
+    tvOS: QUANTUM_XY;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
