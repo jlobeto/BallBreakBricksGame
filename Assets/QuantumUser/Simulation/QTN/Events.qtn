@@ -14,3 +14,12 @@ event OnScoreUpdate
     player_ref playerRef;
     int newScore;
 }
+
+event OnMatchEnded
+{
+    player_ref winner;
+    int winnerScore;
+    
+    player_ref losser;
+    int losserScore;
+}

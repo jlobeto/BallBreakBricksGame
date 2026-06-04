@@ -689,19 +689,23 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct GameplayState : Quantum.IComponentSingleton {
-    public const Int32 SIZE = 4;
+    public const Int32 SIZE = 8;
     public const Int32 ALIGNMENT = 4;
-    [FieldOffset(0)]
+    [FieldOffset(4)]
     public QDictionaryPtr<PlayerRef, Int32> scoresDict;
+    [FieldOffset(0)]
+    public QDictionaryPtr<PlayerRef, Int32> blocksLeft;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 4909;
         hash = hash * 31 + scoresDict.GetHashCode();
+        hash = hash * 31 + blocksLeft.GetHashCode();
         return hash;
       }
     }
     public void ClearPointers(FrameBase f, EntityRef entity) {
       scoresDict = default;
+      blocksLeft = default;
     }
     public static void OnRemoved(FrameBase frame, EntityRef entity, void* ptr) {
       var p = (Quantum.GameplayState*)ptr;
@@ -709,6 +713,7 @@ namespace Quantum {
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (GameplayState*)ptr;
+        QDictionary.Serialize(&p->blocksLeft, serializer, Statics.SerializePlayerRef, Statics.SerializeInt32);
         QDictionary.Serialize(&p->scoresDict, serializer, Statics.SerializePlayerRef, Statics.SerializeInt32);
     }
   }

@@ -112,6 +112,9 @@ namespace Quantum.Prototypes {
     [DictionaryAttribute()]
     [DynamicCollectionAttribute()]
     public DictionaryEntry_PlayerRef_Int32[] scoresDict = {};
+    [DictionaryAttribute()]
+    [DynamicCollectionAttribute()]
+    public DictionaryEntry_PlayerRef_Int32[] blocksLeft = {};
     partial void MaterializeUser(Frame frame, ref Quantum.GameplayState result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.GameplayState component = default;
@@ -128,6 +131,18 @@ namespace Quantum.Prototypes {
             Int32 tmpValue = default;
             tmpKey = this.scoresDict[i].Key;
             tmpValue = this.scoresDict[i].Value;
+            PrototypeValidator.AddToDictionary(dict, tmpKey, tmpValue, in context);
+          }
+        }
+        if (this.blocksLeft.Length == 0) {
+          result.blocksLeft = default;
+        } else {
+          var dict = frame.AllocateDictionary(out result.blocksLeft, this.blocksLeft.Length);
+          for (int i = 0; i < this.blocksLeft.Length; ++i) {
+            PlayerRef tmpKey = default;
+            Int32 tmpValue = default;
+            tmpKey = this.blocksLeft[i].Key;
+            tmpValue = this.blocksLeft[i].Value;
             PrototypeValidator.AddToDictionary(dict, tmpKey, tmpValue, in context);
           }
         }

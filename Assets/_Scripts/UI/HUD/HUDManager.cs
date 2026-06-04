@@ -9,6 +9,14 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         QuantumEvent.Subscribe<EventOnPlayerAdded>(this, OnPlayerAdded);
+        EventBus.AddListener<EventOnShutdownQuantum>(OnReturnToMainMenu);
+    }
+
+    private void OnReturnToMainMenu(EventOnShutdownQuantum data)
+    {
+        EventBus.RemoveListener<EventOnShutdownQuantum>(OnReturnToMainMenu);
+
+        GameManager.Instance.GoBackToMainMenu().Forget();
     }
 
     private void OnPlayerAdded(EventOnPlayerAdded data)

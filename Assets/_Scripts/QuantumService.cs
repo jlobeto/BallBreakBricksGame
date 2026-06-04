@@ -10,6 +10,8 @@ using RuntimeConfig = Quantum.RuntimeConfig;
 
 public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingCallbacks
 {
+    private const float ServiceInterval = 0.1f;
+    
     [SerializeField] private RuntimeConfig runtimeConfig;
     [SerializeField] private RuntimePlayer runtimePlayer;
 
@@ -18,27 +20,16 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
     private string _bestRegion;
     private string _roonName;
     private bool _callClientService;
+    
+    private float _serviceTimer = 0f;
+    
 
-    private void Awake()
-    {
-        //QuantumCallback.Subscribe(this, (CallbackGameStarted c) => OnGameStarted(c.Game, c.IsResync), game => game == QuantumRunner.Default.Game);
-    }
 
     private void Start()
     {
         _client = new RealtimeClient();
         _client.AddCallbackTarget(this);
         _client.StateChanged += OnClientStateChanged;
-        StartCoroutine(CallClientService());
-    }
-
-    private IEnumerator CallClientService()
-    {
-        while (_callClientService)
-        {
-            yield return new WaitForSeconds(0.1f);//recommended by photon (10 times per second).
-            _client?.Service();
-        }
     }
 
     private void OnDestroy()
@@ -48,6 +39,19 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
 
         _client.StateChanged -= OnClientStateChanged;
         _client.RemoveCallbackTarget(this);
+    }
+    
+    private void Update()
+    {
+        if (!_callClientService) return;
+
+        _serviceTimer += Time.deltaTime;
+
+        if (_serviceTimer >= ServiceInterval)
+        {
+            _serviceTimer -= ServiceInterval;
+            _client?.Service();
+        }
     }
 
     public void OnRegionListReceived(RegionHandler regionHandler)
@@ -189,6 +193,12 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
 
         return true;
     }
+
+    public void ShutdownQuantum()
+    {
+        _client?.Disconnect();
+        QuantumRunner.ShutdownAll();
+    }
     
     private EnterRoomArgs BuildEnterRoomArgs(MatchmakingArguments arguments)
     {
@@ -232,6 +242,10 @@ public class QuantumService : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
     public void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log($"OnDisconnected() {cause}");
+        if (cause is DisconnectCause.DisconnectByClientLogic)
+        {
+            _callClientService = false;
+        }
     }
 
     public void OnCustomAuthenticationResponse(Dictionary<string, object> data)

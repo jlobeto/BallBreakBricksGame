@@ -11,17 +11,18 @@ namespace Quantum
             if (!f.Unsafe.TryGetPointer<Block>(blockRef, out var block))
                 return;
 
-            var dmg = f.Get<Ball>(ballRef).damage;
+            var ball = f.Get<Ball>(ballRef);
+            var dmg = ball.damage;
 
             block->lives -= dmg;
             if (block->lives <= 0)
             {
                 f.Destroy(blockRef);
+                f.Unsafe.GetPointerSingleton<GameplayState>()->RemoveBlocks(f, ball.owner);
             }
             else
-            {
                 f.Events.OnBlockReceivedDamage(blockRef, block->lives);
-            }
+            
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Quantum;
 using Quantum.Menu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] AddressablesManager _addressablesManager;
     [SerializeField] QuantumService quantumService;
     
-    [SerializeField] private MenuUI menuUI;
     
     private PlayerDataManager _playerDataManager;
     
@@ -28,21 +29,35 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        
-        menuUI.OnPlayModeClicked += OnPlayModeClicked;
+    
+        EventBus.AddListener<EventOnPlayClicked>(OnPlayModeClicked);
     }
 
-    private void OnPlayModeClicked(bool isOnlineMode, string roomName)
+    public async UniTask GoBackToMainMenu()
     {
-        if (isOnlineMode)
-            OnlinePath(roomName).Forget();
+        var loadingScreen = await _addressablesManager.ShowLoadingScreen();
+        quantumService.ShutdownQuantum();
+        
+        await SceneManager.LoadSceneAsync(0);
+        _addressablesManager.ReleaseSceneHandle();
+
+        Resources.UnloadUnusedAssets();
+        GC.Collect();
+        
+        Destroy(loadingScreen);
+    }
+
+    private void OnPlayModeClicked(EventOnPlayClicked data)
+    {
+        if (data.IsOnlineMatch)
+            OnlinePath(data.RoomId).Forget();
         else
             OfflinePath().Forget();
     }
 
     private async UniTask OfflinePath()
     {
-        await ShowLoadingScreen();
+        await _addressablesManager.ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
         await UniTask.WaitForEndOfFrame();
         await UniTask.WaitForEndOfFrame();
@@ -53,16 +68,10 @@ public class GameManager : MonoBehaviour
 
     private async UniTask OnlinePath(string roomName)
     {
-        await ShowLoadingScreen();
+        await _addressablesManager.ShowLoadingScreen();
         var scene = await _addressablesManager.LoadSceneAsync("Level1");
         await scene.ActivateAsync();
         quantumService.Matchmaking(roomName).Forget();
 
-    }
-
-    private async UniTask ShowLoadingScreen()
-    {
-        await _addressablesManager.ShowLoadingScreen();
-        //await UniTask.WaitForSeconds(1);//hardcoded 1 second for UX purposes.   
     }
 }

@@ -1,4 +1,5 @@
 singleton component GameplayState
 {
     dictionary<player_ref, int> scoresDict;
+    dictionary<player_ref, int> blocksLeft;
 }

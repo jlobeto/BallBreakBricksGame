@@ -13,8 +13,6 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private Button onlineBtn;
     [SerializeField] private TMP_Text bestRegionText;
     
-    public Action<bool, string> OnPlayModeClicked;
-    
 
     private void Start()
     {
@@ -54,7 +52,11 @@ public class MenuUI : MonoBehaviour
 
     private void LoadScene(bool isOnline)
     {
-        OnPlayModeClicked?.Invoke(isOnline, roomId.text);
+        EventBus.Publish<EventOnPlayClicked>(new EventOnPlayClicked()
+        {
+            IsOnlineMatch =  isOnline,
+            RoomId = roomId.text
+        });
     }
 
     private void OnDestroy()
