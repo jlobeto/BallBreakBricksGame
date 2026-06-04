@@ -12,8 +12,7 @@ public class GameResultsUI : MonoBehaviour
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private PlayerResult[]  playerResults;
-    [SerializeField] private GameObject resultsUI;
+    [SerializeField] private PlayerResultUI[]  playerResults;
     
     [SerializeField] private Button continueButton;
     [SerializeField] private float showContinueButtonInSeconds = 2;
@@ -22,8 +21,6 @@ public class GameResultsUI : MonoBehaviour
     {
         canvas.enabled = false;
         canvasGroup.alpha = 0;
-        
-        resultsUI.SetActive(false);
     }
 
     void Start()
@@ -46,7 +43,6 @@ public class GameResultsUI : MonoBehaviour
             return;
         }
         
-        resultsUI.SetActive(true);
         var winnerIsLeftPlayer = data.winner == 0;
         
         if (data.Game.Session.GameMode is DeterministicGameMode.Local)
@@ -54,23 +50,17 @@ public class GameResultsUI : MonoBehaviour
             var leftPlayerResult = winnerIsLeftPlayer ? playerResults[data.winner] : playerResults[data.losser];
             var rightPlayerResult = winnerIsLeftPlayer ? playerResults[data.losser] : playerResults[data.winner];
             
-            leftPlayerResult.win.enabled = winnerIsLeftPlayer;
-            leftPlayerResult.loss.enabled = !winnerIsLeftPlayer;
-            
-            rightPlayerResult.win.enabled = !winnerIsLeftPlayer;
-            rightPlayerResult.loss.enabled = winnerIsLeftPlayer;
-
-            leftPlayerResult.finalScore.text = $"Final Score: {(winnerIsLeftPlayer ? data.winnerScore : data.losserScore)}";
-            rightPlayerResult.finalScore.text = $"Final Score: {(!winnerIsLeftPlayer ? data.winnerScore : data.losserScore)}";
+            leftPlayerResult.SetResult(winnerIsLeftPlayer, winnerIsLeftPlayer ? data.winnerScore : data.losserScore);
+            rightPlayerResult.SetResult(!winnerIsLeftPlayer, !winnerIsLeftPlayer ? data.winnerScore : data.losserScore);
         }
         else
         {
             var playerResult = playerResults[0];
-            playerResult.parent.anchorMax = new Vector2(1, 0.5f);
-            playerResult.parent.anchoredPosition = new Vector2(0, 0);
-            playerResult.finalScore.text = $"Final Score: {(winnerIsLeftPlayer ? data.winnerScore : data.losserScore)}";
             
-            playerResults[1].parent.gameObject.SetActive(false);
+            var isLocalPlayerWinner = data.Game.PlayerIsLocal(data.winner);
+            playerResult.SetOnlineResult(isLocalPlayerWinner, isLocalPlayerWinner ? data.winnerScore : data.losserScore);
+            
+            playerResults[1].Deactivate();
         }
     }
 
@@ -87,13 +77,4 @@ public class GameResultsUI : MonoBehaviour
 
         EventBus.Publish(new EventOnShutdownQuantum());
     }
-}
-
-[Serializable]
-public struct PlayerResult
-{
-    public RectTransform parent;
-    public Image win;
-    public Image loss;
-    public TMP_Text finalScore;
 }

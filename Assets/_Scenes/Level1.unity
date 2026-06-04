@@ -4900,6 +4900,7 @@ GameObject:
   - component: {fileID: 489309026}
   - component: {fileID: 489309028}
   - component: {fileID: 489309027}
+  - component: {fileID: 489309029}
   m_Layer: 5
   m_Name: LeftPlayer
   m_TagString: Untagged
@@ -4967,6 +4968,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489309025}
   m_CullTransparentMesh: 1
+--- !u!114 &489309029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489309025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c37905a5d45f19428a5010932b229b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerResultUI
+  parentObject: {fileID: 489309026}
+  win: {fileID: 966175723}
+  loss: {fileID: 323636829}
+  finalScore: {fileID: 1416366317}
 --- !u!1 &514927200
 GameObject:
   m_ObjectHideFlags: 0
@@ -8496,6 +8513,7 @@ GameObject:
   - component: {fileID: 833862235}
   - component: {fileID: 833862237}
   - component: {fileID: 833862236}
+  - component: {fileID: 833862238}
   m_Layer: 5
   m_Name: RightPlayer
   m_TagString: Untagged
@@ -8563,6 +8581,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833862234}
   m_CullTransparentMesh: 1
+--- !u!114 &833862238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833862234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c37905a5d45f19428a5010932b229b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerResultUI
+  parentObject: {fileID: 833862235}
+  win: {fileID: 1899046004}
+  loss: {fileID: 1224495452}
+  finalScore: {fileID: 336482399}
 --- !u!1 &867199140
 GameObject:
   m_ObjectHideFlags: 0
@@ -15372,15 +15406,8 @@ MonoBehaviour:
   canvas: {fileID: 2061093292}
   canvasGroup: {fileID: 2061093291}
   playerResults:
-  - parent: {fileID: 489309025}
-    win: {fileID: 966175723}
-    loss: {fileID: 323636829}
-    finalScore: {fileID: 1416366317}
-  - parent: {fileID: 833862234}
-    win: {fileID: 1899046004}
-    loss: {fileID: 1224495452}
-    finalScore: {fileID: 336482399}
-  resultsUI: {fileID: 2061093289}
+  - {fileID: 489309029}
+  - {fileID: 833862238}
   continueButton: {fileID: 869677251}
   showContinueButtonInSeconds: 2
 --- !u!1 &1723228733
@@ -19167,7 +19194,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
