@@ -31,7 +31,6 @@ namespace Quantum
             {
                 FP horizontalInput = input->HorizontalInput;
                 
-                //set this constrains as quantum assets as a level config file 
                 if (filter.Transform->Position.X <= minXPos)
                 {
                     horizontalInput = FPMath.Clamp(horizontalInput, 0, 1);
@@ -42,6 +41,7 @@ namespace Quantum
                 }
 
                 filter.Transform->Position += new FPVector2(filter.PlayerLink->speed * horizontalInput, 0);
+                
                 if (filter.Transform->Position.X < minXPos)
                 {
                     filter.Transform->Position = new FPVector2(minXPos, 0);
@@ -49,6 +49,11 @@ namespace Quantum
                 else if (filter.Transform->Position.X > maxXPos)
                 {
                     filter.Transform->Position = new FPVector2(maxXPos, 0);
+                }
+                
+                if (filter.Transform->Position.X >= minXPos && filter.Transform->Position.X <= maxXPos)
+                {
+                    f.Signals.OnPlayerMoved(playerRef, filter.Transform->Position);
                 }
             }
         }

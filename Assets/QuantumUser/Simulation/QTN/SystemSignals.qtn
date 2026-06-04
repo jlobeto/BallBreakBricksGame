@@ -1,2 +1,3 @@
 signal OnBlockCollided (entity_ref blockRef, entity_ref ballRef);
 signal OnBallCollidedDeadZone(Ball* ball);
+signal OnPlayerMoved(player_ref playerRef, FPVector2 xPos);

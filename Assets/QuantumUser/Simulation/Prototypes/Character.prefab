@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prototype:
+    entityRef: {fileID: 0}
     playerRef:
       _index: 0
     speed:

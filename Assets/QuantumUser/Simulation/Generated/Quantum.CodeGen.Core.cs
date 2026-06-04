@@ -771,11 +771,15 @@ namespace Quantum {
   public unsafe partial interface ISignalOnBallCollidedDeadZone : ISignal {
     void OnBallCollidedDeadZone(Frame f, Ball* ball);
   }
+  public unsafe partial interface ISignalOnPlayerMoved : ISignal {
+    void OnPlayerMoved(Frame f, PlayerRef playerRef, FPVector2 xPos);
+  }
   public static unsafe partial class Constants {
   }
   public unsafe partial class Frame {
     private ISignalOnBlockCollided[] _ISignalOnBlockCollidedSystems;
     private ISignalOnBallCollidedDeadZone[] _ISignalOnBallCollidedDeadZoneSystems;
+    private ISignalOnPlayerMoved[] _ISignalOnPlayerMovedSystems;
     partial void AllocGen() {
       _globals = (_globals_*)Context.Allocator.AllocAndClear(sizeof(_globals_));
     }
@@ -789,6 +793,7 @@ namespace Quantum {
       Initialize(this, this.SimulationConfig.Entities, 256);
       _ISignalOnBlockCollidedSystems = BuildSignalsArray<ISignalOnBlockCollided>();
       _ISignalOnBallCollidedDeadZoneSystems = BuildSignalsArray<ISignalOnBallCollidedDeadZone>();
+      _ISignalOnPlayerMovedSystems = BuildSignalsArray<ISignalOnPlayerMoved>();
       _ComponentSignalsOnAdded = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       _ComponentSignalsOnRemoved = new ComponentReactiveCallbackInvoker[ComponentTypeId.Type.Length];
       BuildSignalsArrayOnComponentAdded<Quantum.Ball>();
@@ -875,6 +880,15 @@ namespace Quantum {
           var s = array[i];
           if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
             s.OnBallCollidedDeadZone(_f, ball);
+          }
+        }
+      }
+      public void OnPlayerMoved(PlayerRef playerRef, FPVector2 xPos) {
+        var array = _f._ISignalOnPlayerMovedSystems;
+        for (Int32 i = 0; i < array.Length; ++i) {
+          var s = array[i];
+          if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
+            s.OnPlayerMoved(_f, playerRef, xPos);
           }
         }
       }
