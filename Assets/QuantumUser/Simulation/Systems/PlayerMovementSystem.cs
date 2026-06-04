@@ -9,6 +9,8 @@ namespace Quantum
     [Preserve]
     public unsafe class PlayerMovementSystem : SystemMainThreadFilter<PlayerMovementSystem.Filter>
     {
+        public override bool StartEnabled => false;
+        
         public struct Filter
         {
             public EntityRef Entity;

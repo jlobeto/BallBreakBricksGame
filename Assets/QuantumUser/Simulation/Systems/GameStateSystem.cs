@@ -4,7 +4,7 @@ namespace Quantum
 {
     using Photon.Deterministic;
 
-    public unsafe class GameStateSystem : SystemMainThread, ISignalOnBallCollidedDeadZone
+    public unsafe class GameStateSystem : SystemMainThread, ISignalOnBallCollidedDeadZone, ISignalOnPlayerConnected
     {
         public override void OnInit(Frame f)
         {
@@ -43,6 +43,15 @@ namespace Quantum
             var playerTransfrom = f.Unsafe.GetPointer<Transform2D>(playerLink.entityRef);
             
             state->CreatePlayerBall(f, playerTransfrom->Position, playerRef);
+        }
+
+        public void OnPlayerConnected(Frame f, PlayerRef player)
+        {
+            if (f.MaxPlayerCount == f.PlayerConnectedCount)
+            {
+                f.SystemEnable<PlayerMovementSystem>();
+                f.SystemEnable<ThrowBallSystem>();
+            }        
         }
     }
 }

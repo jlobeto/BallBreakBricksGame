@@ -4,7 +4,8 @@ namespace Quantum
 
     public unsafe class ThrowBallSystem : SystemMainThreadFilter<ThrowBallSystem.Filter>
     {
-        
+        public override bool StartEnabled => false;
+
         public struct Filter
         {
             public EntityRef Entity;
