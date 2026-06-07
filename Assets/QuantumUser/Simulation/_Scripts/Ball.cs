@@ -4,12 +4,15 @@ namespace Quantum
 {
     public partial struct Ball
     {
-        public void Initialize(BallConfig config, PlayerRef playerRef, EntityRef ballEntityRef)
+        public void Initialize(BallConfig config, PlayerRef playerRef, EntityRef playerEntityRef,
+            EntityRef ballEntityRef)
         {
             damage = config.damage;
             entityRef = ballEntityRef;
-            initialSpeed = config.InitialSpeed;
+            speed = config.InitialSpeed;
             owner = playerRef;
+            ownerEntityRef = playerEntityRef;
+            radius = 1;
         }
     }
 }

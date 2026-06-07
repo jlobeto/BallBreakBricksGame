@@ -16,8 +16,7 @@ namespace Quantum
 
         public override void Update(Frame frame, ref Filter filter)
         {
-            
-            
+
         }
 
 

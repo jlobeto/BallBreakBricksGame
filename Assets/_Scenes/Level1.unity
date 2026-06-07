@@ -3217,7 +3217,7 @@ Transform:
   m_GameObject: {fileID: 398834380}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.70710707, w: 0.7071066}
-  m_LocalPosition: {x: 0, y: -13.65, z: 0}
+  m_LocalPosition: {x: 0, y: -13.32, z: 0}
   m_LocalScale: {x: 1, y: 30, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5004,7 +5004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &514927201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6157,7 +6157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDManager
   userControlsUI: {fileID: 1308881899}
-  transitionDurations: 1
+  transitionDurations: 0.5
 --- !u!1 &587741863
 GameObject:
   m_ObjectHideFlags: 0
@@ -12896,8 +12896,8 @@ MonoBehaviour:
   leftPlayerCanvas: {fileID: 925402272}
   rightPlayerCanvas: {fileID: 1938254177}
   onlinePlayerCanvas: {fileID: 1825977930}
-  fadeDuration: 1
-  showTime: 2
+  fadeDuration: 0.5
+  showTime: 0.5
 --- !u!1 &1328262462
 GameObject:
   m_ObjectHideFlags: 0
@@ -15553,6 +15553,9 @@ MonoBehaviour:
     PlayerMapConfig:
       Id:
         Value: 431261063186666598
+    BallMapConfig:
+      Id:
+        Value: 0
     ScoreConfig:
       Id:
         Value: 472296067576100489
@@ -16416,7 +16419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1833400475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19093,6 +19096,8 @@ MonoBehaviour:
   - {fileID: 1782524140}
   - {fileID: 769026759}
   - {fileID: 1192846221}
+  - {fileID: 1833400483}
+  - {fileID: 514927209}
   - {fileID: 288643673}
   - {fileID: 819412395}
   - {fileID: 1569779072}

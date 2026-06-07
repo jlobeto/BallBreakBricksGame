@@ -6,7 +6,7 @@ namespace Quantum
     {
         public static PlayerRef GetEnemy(Frame f, PlayerRef myself)
         {
-            foreach (var _ in f.Unsafe.GetComponentBlockIterator<PlayerLink>())
+            foreach (var _ in f.Unsafe.GetComponentBlockIterator<PlayerData>())
             {
                 if(_.Component->playerRef == myself) continue;
                 return _.Component->playerRef;

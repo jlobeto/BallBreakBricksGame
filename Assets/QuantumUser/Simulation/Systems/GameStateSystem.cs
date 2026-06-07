@@ -23,9 +23,9 @@ namespace Quantum
             f.Destroy(ball->entityRef);
         } 
 
-        public PlayerLink GetPlayerLink(Frame f, PlayerRef playerRef)
+        public PlayerData GetPlayerLink(Frame f, PlayerRef playerRef)
         {
-            foreach (var link in f.Unsafe.GetComponentBlockIterator<PlayerLink>())
+            foreach (var link in f.Unsafe.GetComponentBlockIterator<PlayerData>())
             {
                 if (playerRef == link.Component->playerRef)
                     return *link.Component;
@@ -42,7 +42,7 @@ namespace Quantum
 
             var playerTransfrom = f.Unsafe.GetPointer<Transform2D>(playerLink.entityRef);
             
-            state->CreatePlayerBall(f, playerTransfrom->Position, playerRef);
+            state->CreatePlayerBall(f, playerTransfrom->Position, playerRef, playerLink.entityRef);
         }
 
         public void OnPlayerConnected(Frame f, PlayerRef player)

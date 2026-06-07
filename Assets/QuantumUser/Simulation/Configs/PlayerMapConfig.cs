@@ -9,4 +9,6 @@ namespace Quantum
         public int mapWidth = 32;
         public int blockQuantity;
     }
+    
+
 }

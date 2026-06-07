@@ -1,6 +1,7 @@
-component PlayerLink
+component PlayerData
 {
     EntityRef entityRef;
     PlayerRef playerRef;
     FP speed;
+    FP paddleSize;
 }

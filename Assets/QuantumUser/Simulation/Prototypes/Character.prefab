@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1727367735947209373}
   - component: {fileID: 1576299518214471895}
   - component: {fileID: 1576299518214471896}
-  - component: {fileID: 8267904383142982886}
   - component: {fileID: 839900378715189866}
+  - component: {fileID: 8581372952964651455}
   m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
@@ -397,24 +397,6 @@ MonoBehaviour:
   OnEntityDestroyed:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8267904383142982886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576299518214471897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 803c94eb5d0b58048b07d8f90af15899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prototype:
-    entityRef: {fileID: 0}
-    playerRef:
-      _index: 0
-    speed:
-      RawValue: 0
 --- !u!114 &839900378715189866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,3 +409,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ef3802b3dd9f44ca0a3b4d9b279a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterView
+--- !u!114 &8581372952964651455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576299518214471897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81693f339f634a40b7e9c9455713de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Quantum.Unity::Quantum.QPrototypePlayerData
+  Prototype:
+    entityRef: {fileID: 0}
+    playerRef:
+      _index: 0
+    speed:
+      RawValue: 131072
+    paddleSize:
+      RawValue: 393216

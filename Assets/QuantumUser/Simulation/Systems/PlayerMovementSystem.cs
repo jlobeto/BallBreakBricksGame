@@ -14,7 +14,7 @@ namespace Quantum
         public struct Filter
         {
             public EntityRef Entity;
-            public PlayerLink* PlayerLink;
+            public PlayerData* PlayerLink;
             public Transform2D* Transform;
         }
         

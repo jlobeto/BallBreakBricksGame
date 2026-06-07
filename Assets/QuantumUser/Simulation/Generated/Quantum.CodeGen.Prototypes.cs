@@ -59,10 +59,13 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.Ball))]
   public unsafe class BallPrototype : ComponentPrototype<Quantum.Ball> {
     public PlayerRef owner;
+    public MapEntityId ownerEntityRef;
     public MapEntityId entityRef;
     public Int32 damage;
-    public FP initialSpeed;
     public QBoolean wasThrown;
+    public FP speed;
+    public FPVector2 velocityVector;
+    public FP radius;
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.Ball component = default;
         Materialize((Frame)f, ref component, in context);
@@ -70,10 +73,13 @@ namespace Quantum.Prototypes {
     }
     public void Materialize(Frame frame, ref Quantum.Ball result, in PrototypeMaterializationContext context = default) {
         result.owner = this.owner;
+        PrototypeValidator.FindMapEntity(this.ownerEntityRef, in context, out result.ownerEntityRef);
         PrototypeValidator.FindMapEntity(this.entityRef, in context, out result.entityRef);
         result.damage = this.damage;
-        result.initialSpeed = this.initialSpeed;
         result.wasThrown = this.wasThrown;
+        result.speed = this.speed;
+        result.velocityVector = this.velocityVector;
+        result.radius = this.radius;
     }
   }
   [System.SerializableAttribute()]
@@ -162,20 +168,22 @@ namespace Quantum.Prototypes {
     }
   }
   [System.SerializableAttribute()]
-  [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerLink))]
-  public unsafe class PlayerLinkPrototype : ComponentPrototype<Quantum.PlayerLink> {
+  [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerData))]
+  public unsafe class PlayerDataPrototype : ComponentPrototype<Quantum.PlayerData> {
     public MapEntityId entityRef;
     public PlayerRef playerRef;
     public FP speed;
+    public FP paddleSize;
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
-        Quantum.PlayerLink component = default;
+        Quantum.PlayerData component = default;
         Materialize((Frame)f, ref component, in context);
         return f.Set(entity, component) == SetResult.ComponentAdded;
     }
-    public void Materialize(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context = default) {
+    public void Materialize(Frame frame, ref Quantum.PlayerData result, in PrototypeMaterializationContext context = default) {
         PrototypeValidator.FindMapEntity(this.entityRef, in context, out result.entityRef);
         result.playerRef = this.playerRef;
         result.speed = this.speed;
+        result.paddleSize = this.paddleSize;
     }
   }
   [System.SerializableAttribute()]

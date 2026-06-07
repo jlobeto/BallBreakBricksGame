@@ -109,7 +109,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -136,7 +136,7 @@ MonoBehaviour:
       RawValue: 0
   PhysicsCollider:
     IsEnabled: 1
-    IsTrigger: 0
+    IsTrigger: 1
     Material:
       Id:
         Value: 447374352064574827
@@ -209,10 +209,10 @@ MonoBehaviour:
     LayerSource: 0
     Layer: 7
     CallbackFlags:
-      Value: 134
+      Value: 4095
   PhysicsBody:
-    IsEnabled: 1
-    Config2D: 128
+    IsEnabled: 0
+    Config2D: 1
     Config3D: 58
     RotationFreeze: 0
     InertiaMode: 0
@@ -311,7 +311,7 @@ MonoBehaviour:
     GravityScale:
       _hasValue: 0
       _value:
-        RawValue: 131072
+        RawValue: -65536
   NavMeshPathfinder:
     IsEnabled: 0
     NavMeshAgentConfig:
@@ -394,8 +394,17 @@ MonoBehaviour:
   Prototype:
     owner:
       _index: 0
+    ownerEntityRef: {fileID: 0}
+    entityRef: {fileID: 0}
     damage: 0
-    initialSpeed:
-      RawValue: 0
     wasThrown:
       Value: 0
+    speed:
+      RawValue: 0
+    velocityVector:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+    radius:
+      RawValue: 65536

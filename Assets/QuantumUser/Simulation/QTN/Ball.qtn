@@ -1,8 +1,13 @@
 component Ball
 {
     player_ref owner;
+    entity_ref ownerEntityRef;
     entity_ref entityRef;
     int damage;
-    FP initialSpeed;
+    
     bool wasThrown;
+    
+    FP speed;
+    FPVector2 velocityVector;
+    FP radius;
 }   

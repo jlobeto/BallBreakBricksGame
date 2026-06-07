@@ -2586,7 +2586,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _addressablesManager: {fileID: 2141384009}
   quantumService: {fileID: 2141384008}
-  menuUI: {fileID: 1312280236}
 --- !u!4 &2141384007
 Transform:
   m_ObjectHideFlags: 0
@@ -2631,6 +2630,9 @@ MonoBehaviour:
     PlayerMapConfig:
       Id:
         Value: 431261063186666598
+    BallMapConfig:
+      Id:
+        Value: 488506660876297573
     ScoreConfig:
       Id:
         Value: 472296067576100489

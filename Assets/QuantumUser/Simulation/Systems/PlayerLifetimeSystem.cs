@@ -21,7 +21,7 @@ namespace Quantum
             var runtimePlayer = f.GetPlayerData(player);
             var entity = f.Create(runtimePlayer.PlayerAvatar);
 
-            var playerLink = f.Unsafe.GetPointer<PlayerLink>(entity);
+            var playerLink = f.Unsafe.GetPointer<PlayerData>(entity);
             playerLink->playerRef = player;
             playerLink->entityRef = entity;
             playerLink->speed = 2;
@@ -30,7 +30,7 @@ namespace Quantum
             playerTransform->Position = new FPVector2((int)player * mapConfig.mapWidth, 0);
 
             var gameState = f.Unsafe.GetOrAddSingletonPointer<GameplayState>();
-            gameState->CreatePlayerBall(f, playerTransform->Position, player);
+            gameState->CreatePlayerBall(f, playerTransform->Position, player, entity);
             gameState->SetBlockLeft(f, player, mapConfig.blockQuantity);
             f.Events.OnPlayerAdded(player);
         }

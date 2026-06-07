@@ -30,16 +30,16 @@ namespace Quantum
                 OnEndOfMatch(f, playerRef);
         }
 
-        public void CreatePlayerBall(Frame f, FPVector2 playerPosition, PlayerRef playerRef)
+        public void CreatePlayerBall(Frame f, FPVector2 playerPosition, PlayerRef playerRef, EntityRef playerLinkEntityRef)
         {
             var commonBallConfig = f.FindAsset(f.RuntimeConfig.BallCommonConfig);
             var ballEntityRef = f.Create(commonBallConfig.BallPrototype);
 
             var ball = f.Unsafe.GetPointer<Ball>(ballEntityRef);
-            ball->Initialize(commonBallConfig, playerRef, ballEntityRef);
+            ball->Initialize(commonBallConfig, playerRef, playerLinkEntityRef, ballEntityRef);
             
-            var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
-            ballPhysics->Enabled = false;
+            //var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
+            //ballPhysics->Enabled = false;
             
             var ballTransform = f.Unsafe.GetPointer<Transform2D>(ballEntityRef);
             ballTransform->Position = playerPosition + FPVector2.Up;

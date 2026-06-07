@@ -9,32 +9,31 @@ namespace Quantum
         public struct Filter
         {
             public EntityRef Entity;
-            public PlayerLink* PlayerLink;
+            public PlayerData* Player;
         }
         
         public override void Update(Frame f, ref Filter filter)
         {
-            var input = f.GetPlayerInput(filter.PlayerLink->playerRef);
+            var input = f.GetPlayerInput(filter.Player->playerRef);
             if (input->ThrowBall.WasPressed)
             {
                 foreach (var _ in f.Unsafe.GetComponentBlockIterator<Ball>())
                 {
-                    if(_.Component->owner !=  filter.PlayerLink->playerRef) continue;
+                    if(_.Component->owner !=  filter.Player->playerRef) continue;
                     if(_.Component->wasThrown) continue;
                 
-                    InitializeBallPhysics(_.Component, f.Unsafe.GetPointer<PhysicsBody2D>(_.Entity));
+                    InitializeBallPhysics(_.Component);
                     break;
                 }
             }
         }
         
-        private void InitializeBallPhysics(Ball* ball, PhysicsBody2D* ballPhysics)
+        private void InitializeBallPhysics(Ball* ball)
         {
             if (ball->wasThrown) return;
 
             ball->wasThrown = true;
-            ballPhysics->Enabled = true;
-            ballPhysics->Velocity = new FPVector2(ball->initialSpeed);
+            ball->velocityVector= new FPVector2(ball->speed);
         }
     }
 }

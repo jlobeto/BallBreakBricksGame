@@ -18,5 +18,7 @@ MonoBehaviour:
       Value: 431261063186666598
   minXPos: -11
   maxXPos: 11
+  maxYPos: 20
+  deadZoneYPos: -7
   mapWidth: 32
-  blockQuantity: 3
+  blockQuantity: 15

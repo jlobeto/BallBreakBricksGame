@@ -1,6 +1,4 @@
 using Quantum;
-using UnityEngine;
-using Input = UnityEngine.Input;
 
 public class CharacterView : QuantumEntityViewComponent
 {
@@ -9,7 +7,7 @@ public class CharacterView : QuantumEntityViewComponent
     public override void OnActivate(Frame frame)
     {
         
-        if (frame.TryGet<PlayerLink>(EntityRef, out var playerLink))
+        if (frame.TryGet<Quantum.PlayerData>(EntityRef, out var playerLink))
         {
             _isLocalPlayer = Game.PlayerIsLocal(playerLink.playerRef);
         }
