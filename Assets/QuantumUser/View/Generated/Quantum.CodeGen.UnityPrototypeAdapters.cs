@@ -57,8 +57,6 @@ namespace Quantum.Prototypes.Unity {
     public Int32 damage;
     public QBoolean wasThrown;
     public FP speed;
-    public FPVector2 velocityVector;
-    public FP radius;
     partial void ConvertUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.BallPrototype prototype);
     public override Quantum.Prototypes.BallPrototype Convert(Quantum.QuantumEntityPrototypeConverter converter) {
       var result = new Quantum.Prototypes.BallPrototype();
@@ -68,8 +66,6 @@ namespace Quantum.Prototypes.Unity {
       converter.Convert(this.damage, out result.damage);
       converter.Convert(this.wasThrown, out result.wasThrown);
       converter.Convert(this.speed, out result.speed);
-      converter.Convert(this.velocityVector, out result.velocityVector);
-      converter.Convert(this.radius, out result.radius);
       ConvertUser(converter, ref result);
       return result;
     }

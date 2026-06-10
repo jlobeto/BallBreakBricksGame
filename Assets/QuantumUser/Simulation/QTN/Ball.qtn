@@ -8,6 +8,4 @@ component Ball
     bool wasThrown;
     
     FP speed;
-    FPVector2 velocityVector;
-    FP radius;
 }   

@@ -619,7 +619,7 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Ball : Quantum.IComponent {
-    public const Int32 SIZE = 64;
+    public const Int32 SIZE = 40;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(4)]
     public PlayerRef owner;
@@ -631,12 +631,8 @@ namespace Quantum {
     public Int32 damage;
     [FieldOffset(8)]
     public QBoolean wasThrown;
-    [FieldOffset(40)]
-    public FP speed;
-    [FieldOffset(48)]
-    public FPVector2 velocityVector;
     [FieldOffset(32)]
-    public FP radius;
+    public FP speed;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 4003;
@@ -646,8 +642,6 @@ namespace Quantum {
         hash = hash * 31 + damage.GetHashCode();
         hash = hash * 31 + wasThrown.GetHashCode();
         hash = hash * 31 + speed.GetHashCode();
-        hash = hash * 31 + velocityVector.GetHashCode();
-        hash = hash * 31 + radius.GetHashCode();
         return hash;
       }
     }
@@ -658,9 +652,7 @@ namespace Quantum {
         QBoolean.Serialize(&p->wasThrown, serializer);
         EntityRef.Serialize(&p->entityRef, serializer);
         EntityRef.Serialize(&p->ownerEntityRef, serializer);
-        FP.Serialize(&p->radius, serializer);
         FP.Serialize(&p->speed, serializer);
-        FPVector2.Serialize(&p->velocityVector, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]

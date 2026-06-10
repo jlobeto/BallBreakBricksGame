@@ -38,8 +38,8 @@ namespace Quantum
             var ball = f.Unsafe.GetPointer<Ball>(ballEntityRef);
             ball->Initialize(commonBallConfig, playerRef, playerLinkEntityRef, ballEntityRef);
             
-            //var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
-            //ballPhysics->Enabled = false;
+            var ballPhysics = f.Unsafe.GetPointer<PhysicsBody2D>(ballEntityRef);
+            ballPhysics->Enabled = false;
             
             var ballTransform = f.Unsafe.GetPointer<Transform2D>(ballEntityRef);
             ballTransform->Position = playerPosition + FPVector2.Up;

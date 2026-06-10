@@ -12,7 +12,6 @@ namespace Quantum
             speed = config.InitialSpeed;
             owner = playerRef;
             ownerEntityRef = playerEntityRef;
-            radius = 1;
         }
     }
 }

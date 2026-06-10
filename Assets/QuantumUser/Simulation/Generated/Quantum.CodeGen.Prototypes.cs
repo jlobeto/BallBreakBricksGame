@@ -64,8 +64,6 @@ namespace Quantum.Prototypes {
     public Int32 damage;
     public QBoolean wasThrown;
     public FP speed;
-    public FPVector2 velocityVector;
-    public FP radius;
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.Ball component = default;
         Materialize((Frame)f, ref component, in context);
@@ -78,8 +76,6 @@ namespace Quantum.Prototypes {
         result.damage = this.damage;
         result.wasThrown = this.wasThrown;
         result.speed = this.speed;
-        result.velocityVector = this.velocityVector;
-        result.radius = this.radius;
     }
   }
   [System.SerializableAttribute()]

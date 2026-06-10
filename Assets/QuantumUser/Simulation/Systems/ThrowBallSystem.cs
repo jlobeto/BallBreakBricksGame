@@ -4,7 +4,6 @@ namespace Quantum
 
     public unsafe class ThrowBallSystem : SystemMainThreadFilter<ThrowBallSystem.Filter>
     {
-        public override bool StartEnabled => false;
 
         public struct Filter
         {
@@ -22,18 +21,19 @@ namespace Quantum
                     if(_.Component->owner !=  filter.Player->playerRef) continue;
                     if(_.Component->wasThrown) continue;
                 
-                    InitializeBallPhysics(_.Component);
+                    InitializeBallPhysics(_.Component, f.Unsafe.GetPointer<PhysicsBody2D>(_.Entity));
                     break;
                 }
             }
         }
         
-        private void InitializeBallPhysics(Ball* ball)
+        private void InitializeBallPhysics(Ball* ball, PhysicsBody2D* ballPhysics)
         {
             if (ball->wasThrown) return;
 
             ball->wasThrown = true;
-            ball->velocityVector= new FPVector2(ball->speed);
+            ballPhysics->Enabled = true;
+            ballPhysics->Velocity = new FPVector2(ball->speed);
         }
     }
 }

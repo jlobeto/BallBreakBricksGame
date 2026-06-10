@@ -109,12 +109,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5007538
-  m_Center: {x: 0, y: 0.00000011920929, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2749057020524220309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
       RawValue: 0
   PhysicsCollider:
     IsEnabled: 1
-    IsTrigger: 1
+    IsTrigger: 0
     Material:
       Id:
         Value: 447374352064574827
@@ -151,7 +151,7 @@ MonoBehaviour:
         Id:
           Value: 0
       CircleRadius:
-        RawValue: 32817
+        RawValue: 32768
       CapsuleSize:
         X:
           RawValue: 65536
@@ -211,8 +211,8 @@ MonoBehaviour:
     CallbackFlags:
       Value: 4095
   PhysicsBody:
-    IsEnabled: 0
-    Config2D: 1
+    IsEnabled: 1
+    Config2D: 128
     Config3D: 58
     RotationFreeze: 0
     InertiaMode: 0
@@ -401,10 +401,3 @@ MonoBehaviour:
       Value: 0
     speed:
       RawValue: 0
-    velocityVector:
-      X:
-        RawValue: 0
-      Y:
-        RawValue: 0
-    radius:
-      RawValue: 65536
